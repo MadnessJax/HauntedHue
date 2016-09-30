@@ -2,7 +2,7 @@
 Philips Hue App. Make your house a haunted house.
 
 # Nativescript Documentation
-http://docs.nativescript.org/
+- http://docs.nativescript.org/
 
 # Libraries
 - nativescript-sound
