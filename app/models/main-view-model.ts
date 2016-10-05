@@ -3,6 +3,8 @@ import {Observable} from 'data/observable';
 import http = require("http");
 var sound = require("nativescript-sound");
 
+import  { test } from "./fx-fadeOutSlow";
+
 export class LivingSceneModel extends Observable {
 
   private _counter: number;
@@ -78,32 +80,33 @@ public FX(){
   var options : any[];
   var _this = this;
   // TODO add target option to all functions
-console.log("sound go");
-console.log("------");
 
 
 // play the sound (i.e. tap event handler) 
 
-setTimeout(function(){
-    _this.tada.play();
-}, 200);
+          //setTimeout(function(){
+          //    _this.tada.play();
+          //}, 200);
 
   //this.runFX("flashFX", {});
   //this.runFX("flashFXMulti", {"amount" : Math.floor(Math.random() * this.lightsAmount) + 1});
-  // this.runFX("fadeInOutLoop", {"loop" : 6, "speed": 2.5}); //6 times == 6 seconds in total
+  //this.runFX("fadeInOutLoop", {"loop" : 6, "speed": 2.5}); //6 times == 6 seconds in total
   //this.runFX("fadeInSlow", {}); 
   
   //tmp test settimeout
 
-  var tester = setInterval(function(){
-    _this.runFX("fadeOutSlow", {"speed" : 1});
-  }, 2500);
-  
-  setTimeout(function(){
-    clearInterval(tester);
-    _this.runFX("fadeOutSlow", {"speed" : 1});
-    _this.tada.stop();
-  }, 50000); // see mp3 length
+            // var tester = setInterval(function(){
+            //   _this.runFX("fadeOutSlow", {"speed" : 1});
+            // }, 2500);
+            
+            // setTimeout(function(){
+            //   clearInterval(tester);
+            //   _this.runFX("fadeOutSlow", {"speed" : 1});
+            //   _this.tada.stop();
+            // }, 50000); // see mp3 length
+
+test();
+
 }
 
 
@@ -114,7 +117,7 @@ setTimeout(function(){
 public runFX(type, options) {
 
   // ---------------------- EFFECT ----------------------
-  if(type == "flashFX") {
+  /* if(type == "flashFX") {
     var flashFX = [
       { "on" : true,  "bri": 150,   "transitiontime": 0,   "sat" : 0 },
       { "on" : false, "bri": 0,     "transitiontime": 0,   "sat" : 0 } ,
@@ -129,7 +132,7 @@ public runFX(type, options) {
           _this.setOn("/lights/9/state", flashFX[i]);
         }, i * 100);
       }
-  }
+  } */
 
   // ---------------------- EFFECT ----------------------
   if(type == "flashFXMulti", options) {
