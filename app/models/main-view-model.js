@@ -35,9 +35,11 @@ var LivingSceneModel = (function (_super) {
         }
         return lights();
     };
-    LivingSceneModel.prototype.FX = function () {
+    LivingSceneModel.prototype.btnIntenseHorror = function () {
         var options;
         var _this = this;
+        fx_fadeOutSlow_1.fXfadeOutSlow();
+        mp3_horror_1.mp3IntenseHorror();
         // TODO add target option to all functions 
         // play the sound (i.e. tap event handler) 
         //setTimeout(function(){
@@ -56,8 +58,6 @@ var LivingSceneModel = (function (_super) {
         //   _this.runFX("fadeOutSlow", {"speed" : 1});
         //   _this.tada.stop();
         // }, 50000); // see mp3 length
-        fx_fadeOutSlow_1.fXfadeOutSlow();
-        mp3_horror_1.mp3IntenseHorror();
     };
     /**
      * Effects Library

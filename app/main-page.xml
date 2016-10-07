@@ -1,11 +1,15 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
-  <StackLayout>
-    <!-- Button text="ON" tap="{{ setOn() }}" / -->
-    <!-- Button text="OFF" tap="{{ setOff }}" / -->
-      
-    <Button text="Get Data" tap="{{ Data }}" />
-    <Button text="FX-Flash" tap="{{ FX }}" style="color: white; background-color: red; height: 100; margin-top: 60"/>
-
-    <!-- Button text="Theme-Haunted" tap="{{ Haunted }}" / -->
-  </StackLayout>
+    <StackLayout orientation="vertical">        
+        <!-- Button text="ON" tap="{{ setOn() }}" / -->
+        <!-- Button text="OFF" tap="{{ setOff }}" / -->
+        <!-- Button text="Get Data" tap="{{ Data }}" / -->
+        <!-- Button text="Theme-Haunted" tap="{{ Haunted }}" / -->
+        
+        <Button class="first" text="[ PlaceHolder ]" />
+        
+        <Button class="IntenseHorror" text="Intense Horror" tap="{{ btnIntenseHorror }}" />
+        
+        <Button class="third" text="[ PlaceHolder ]" />
+        
+    </StackLayout>
 </Page>

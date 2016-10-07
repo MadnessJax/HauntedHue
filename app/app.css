@@ -1,3 +1,33 @@
 Page {
     background-image: ~/images/first-hue-app-setup.jpg;
+    background-size: 100% 100%;
+}
+
+StackLayout {
+    margin-top: 60px;
+        
+    opacity: 0.5
+}
+
+StackLayout Button {
+    height: 115;
+    
+    margin-bottom: 5;
+    
+    font-size: 30;
+    color: black;
+    
+    opacity: 1;
+}
+
+.first {
+    background-color: yellow;
+}
+
+.IntenseHorror {
+    background-color: red; 
+}
+
+.third {
+    background-color: green;
 }

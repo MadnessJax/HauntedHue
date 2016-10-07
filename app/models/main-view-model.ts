@@ -23,7 +23,7 @@ export class LivingSceneModel extends Observable {
     /* this.runGet().then(function(res){
       console.log("\n ======= BEGIN : SHOW API DATA: ========");
       console.log(res);
-      console.log("\n ======= END   : SHOW API DATA: ========");
+      console.log("\n ======= END   : SHOW API DATA: ========"); 
     }); */
 
     var _this = this;
@@ -52,9 +52,13 @@ public Data() {
   return lights();
 }
 
-public FX(){
-  var options : any[];
-  var _this = this;
+public btnIntenseHorror(){
+    var options : any[];
+    var _this = this;
+
+    fXfadeOutSlow();
+    mp3IntenseHorror();
+
   // TODO add target option to all functions 
 
 
@@ -80,10 +84,6 @@ public FX(){
             //   _this.runFX("fadeOutSlow", {"speed" : 1});
             //   _this.tada.stop();
             // }, 50000); // see mp3 length
-
-    fXfadeOutSlow();
-    mp3IntenseHorror();
-
 }
 
 
