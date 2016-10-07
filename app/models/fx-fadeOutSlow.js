@@ -1,26 +1,20 @@
 "use strict";
 var http = require("http");
 var color_converter_1 = require("../libs/color-converter");
-var sound = require("nativescript-sound");
-function FirstEffectModel() {
+var mp3_horror_1 = require("./mp3-horror");
+function runFXmain() {
     console.log("poep !!!!!");
     var lightsAmount;
     var obj;
-    var tada;
     var _this = this;
     obj = { "on": true };
     Data().then(function (res) { _this.lightsAmount = Object.keys(res).length; });
-    tada = sound.create("~/mp3/horror.mp3"); // preload the audio file 
-    setTimeout(function () {
-        tada.play();
-    }, 200);
     var tester = setInterval(function () {
         runFX("fadeOutSlow", { "speed": 1 });
     }, 2500);
     setTimeout(function () {
         clearInterval(tester);
         runFX("fadeOutSlow", { "speed": 1 });
-        tada.stop();
     }, 50000); // see mp3 length
     function runFX(type, options) {
         if (type == "fadeOutSlow") {
@@ -68,7 +62,8 @@ function FirstEffectModel() {
             // console.log("Error occurred " + e);
         });
     }
+    mp3_horror_1.mp3IntenseHorror();
 }
-function test() { FirstEffectModel(); }
-exports.test = test;
+function fXfadeOutSlow() { runFXmain(); }
+exports.fXfadeOutSlow = fXfadeOutSlow;
 //# sourceMappingURL=fx-fadeOutSlow.js.map

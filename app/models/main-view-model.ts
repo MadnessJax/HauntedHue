@@ -3,7 +3,8 @@ import {Observable} from 'data/observable';
 import http = require("http");
 var sound = require("nativescript-sound");
 
-import  { test } from "./fx-fadeOutSlow";
+import  { fXfadeOutSlow } from "./fx-fadeOutSlow";
+
 
 export class LivingSceneModel extends Observable {
 
@@ -15,7 +16,7 @@ export class LivingSceneModel extends Observable {
 
   private lightsAmount : number;
 
-  private tada : any;
+  //private tada : any;
 
   constructor() {
     super();
@@ -34,7 +35,7 @@ export class LivingSceneModel extends Observable {
     this.obj = { "on": true };
     this.Data().then(function(res){ _this.lightsAmount = Object.keys(res).length; });
 
-    this.tada = sound.create("~/mp3/horror.mp3"); // preload the audio file 
+    //this.tada = sound.create("~/mp3/horror.mp3"); // preload the audio file 
   }
 
   private runGet(){
@@ -105,7 +106,7 @@ public FX(){
             //   _this.tada.stop();
             // }, 50000); // see mp3 length
 
-test();
+    fXfadeOutSlow();
 
 }
 

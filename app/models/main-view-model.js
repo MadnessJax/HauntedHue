@@ -5,6 +5,7 @@ var sound = require("nativescript-sound");
 var fx_fadeOutSlow_1 = require("./fx-fadeOutSlow");
 var LivingSceneModel = (function (_super) {
     __extends(LivingSceneModel, _super);
+    //private tada : any;
     function LivingSceneModel() {
         _super.call(this);
         // Initialize default values.
@@ -18,7 +19,7 @@ var LivingSceneModel = (function (_super) {
         var _this = this;
         this.obj = { "on": true };
         this.Data().then(function (res) { _this.lightsAmount = Object.keys(res).length; });
-        this.tada = sound.create("~/mp3/horror.mp3"); // preload the audio file 
+        //this.tada = sound.create("~/mp3/horror.mp3"); // preload the audio file 
     }
     LivingSceneModel.prototype.runGet = function () {
         return http.request({
@@ -81,7 +82,7 @@ var LivingSceneModel = (function (_super) {
         //   _this.runFX("fadeOutSlow", {"speed" : 1});
         //   _this.tada.stop();
         // }, 50000); // see mp3 length
-        fx_fadeOutSlow_1.test();
+        fx_fadeOutSlow_1.fXfadeOutSlow();
     };
     /**
      * Effects Library

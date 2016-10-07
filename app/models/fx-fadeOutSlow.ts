@@ -3,41 +3,29 @@ import http = require("http");
 
 import { RGB } from "../libs/color-converter";
 
-var sound = require("nativescript-sound");
+import  * as mp3IntenseHorror from "./mp3-horror";
 
-
-function FirstEffectModel() {
+function runFXmain() {
 
   console.log("poep !!!!!");
 
-  var lightsAmount : number;
-  var obj;
-  var tada : any;
-
-
+    var lightsAmount : number;
+    var obj;
 
     var _this = this;
-    
+
     obj = { "on": true };
     Data().then(function(res){ _this.lightsAmount = Object.keys(res).length; });
 
-    tada = sound.create("~/mp3/horror.mp3"); // preload the audio file 
+    var tester = setInterval(function(){
+        runFX("fadeOutSlow", {"speed" : 1});
+    }, 2500);
 
-          setTimeout(function(){
-              tada.play();
-          }, 200);
-
-            var tester = setInterval(function(){
-               runFX("fadeOutSlow", {"speed" : 1});
-            }, 2500);
-
-            setTimeout(function(){
-            clearInterval(tester);
-             runFX("fadeOutSlow", {"speed" : 1});
-             tada.stop();
-            }, 50000); // see mp3 length
-
-
+    setTimeout(function(){
+        clearInterval(tester);
+        runFX("fadeOutSlow", {"speed" : 1});
+    }, 50000); // see mp3 length
+    
   function runFX(type, options) {
       if(type == "fadeOutSlow") {
         let fadeOutSlow = [
@@ -84,7 +72,9 @@ if(obj.on === undefined){
         // console.log("Error occurred " + e);
     });
   }
+    
+  mp3IntenseHorror();
 
 }
 
-export function test() { FirstEffectModel(); }
+export function fXfadeOutSlow() { runFXmain(); }
