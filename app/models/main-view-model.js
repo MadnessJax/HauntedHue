@@ -3,19 +3,16 @@ var observable_1 = require('data/observable');
 var http = require("http");
 var sound = require("nativescript-sound");
 var fx_fadeOutSlow_1 = require("./fx-fadeOutSlow");
+var mp3_horror_1 = require("./mp3-horror");
 var LivingSceneModel = (function (_super) {
     __extends(LivingSceneModel, _super);
-    //private tada : any;
     function LivingSceneModel() {
         _super.call(this);
-        // Initialize default values.
-        this._counter = 42;
-        this.updateMessage();
-        this.runGet().then(function (res) {
-            console.log("\n ======= BEGIN : SHOW API DATA: ========");
-            console.log(res);
-            console.log("\n ======= END   : SHOW API DATA: ========");
-        });
+        /* this.runGet().then(function(res){
+          console.log("\n ======= BEGIN : SHOW API DATA: ========");
+          console.log(res);
+          console.log("\n ======= END   : SHOW API DATA: ========");
+        }); */
         var _this = this;
         this.obj = { "on": true };
         this.Data().then(function (res) { _this.lightsAmount = Object.keys(res).length; });
@@ -28,29 +25,6 @@ var LivingSceneModel = (function (_super) {
             return response.content.toString();
         });
     };
-    Object.defineProperty(LivingSceneModel.prototype, "message", {
-        get: function () {
-            return this._message;
-        },
-        set: function (value) {
-            if (this._message !== value) {
-                this._message = value;
-                this.notifyPropertyChange('message', value);
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(LivingSceneModel.prototype, "someProperty", {
-        get: function () {
-            return this._someProperty;
-        },
-        set: function (_res) {
-            this._someProperty = _res;
-        },
-        enumerable: true,
-        configurable: true
-    });
     LivingSceneModel.prototype.Data = function () {
         function lights() {
             return http.request({
@@ -64,7 +38,7 @@ var LivingSceneModel = (function (_super) {
     LivingSceneModel.prototype.FX = function () {
         var options;
         var _this = this;
-        // TODO add target option to all functions
+        // TODO add target option to all functions 
         // play the sound (i.e. tap event handler) 
         //setTimeout(function(){
         //    _this.tada.play();
@@ -83,6 +57,7 @@ var LivingSceneModel = (function (_super) {
         //   _this.tada.stop();
         // }, 50000); // see mp3 length
         fx_fadeOutSlow_1.fXfadeOutSlow();
+        mp3_horror_1.mp3IntenseHorror();
     };
     /**
      * Effects Library
@@ -222,18 +197,6 @@ var LivingSceneModel = (function (_super) {
         }, function (e) {
             // console.log("Error occurred " + e);
         });
-    };
-    LivingSceneModel.prototype.onTap = function () {
-        this._counter--;
-        this.updateMessage();
-    };
-    LivingSceneModel.prototype.updateMessage = function () {
-        if (this._counter <= 0) {
-            this.message = 'Hoorraaay! You unlocked the NativeScript clicker achievement!';
-        }
-        else {
-            this.message = this._counter + " taps left";
-        }
     };
     LivingSceneModel.prototype.RGB = function (red, green, blue) {
         //Gamma correctie

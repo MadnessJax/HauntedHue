@@ -4,6 +4,7 @@ import http = require("http");
 var sound = require("nativescript-sound");
 
 import  { fXfadeOutSlow } from "./fx-fadeOutSlow";
+import  { mp3IntenseHorror } from "./mp3-horror";
 
 
 export class LivingSceneModel extends Observable {
@@ -16,20 +17,14 @@ export class LivingSceneModel extends Observable {
 
   private lightsAmount : number;
 
-  //private tada : any;
-
   constructor() {
     super();
 
-    // Initialize default values.
-    this._counter = 42;
-    this.updateMessage();
-
-    this.runGet().then(function(res){
+    /* this.runGet().then(function(res){
       console.log("\n ======= BEGIN : SHOW API DATA: ========");
       console.log(res);
       console.log("\n ======= END   : SHOW API DATA: ========");
-    });
+    }); */
 
     var _this = this;
     this.obj = { "on": true };
@@ -46,26 +41,6 @@ export class LivingSceneModel extends Observable {
     });
   }
 
-  get message(): string {
-    return this._message;
-  }
-  
-  set message(value: string) {
-    if (this._message !== value) {
-      this._message = value;
-      this.notifyPropertyChange('message', value)
-    }
-  }
-
-
-  set someProperty(_res: string) {
-    this._someProperty = _res;
-  }
-
-  get someProperty(): string {
-    return this._someProperty;
-  }
-
 public Data() {
   function lights () {
     return http.request({
@@ -80,7 +55,7 @@ public Data() {
 public FX(){
   var options : any[];
   var _this = this;
-  // TODO add target option to all functions
+  // TODO add target option to all functions 
 
 
 // play the sound (i.e. tap event handler) 
@@ -107,6 +82,7 @@ public FX(){
             // }, 50000); // see mp3 length
 
     fXfadeOutSlow();
+    mp3IntenseHorror();
 
 }
 
@@ -244,19 +220,6 @@ if(obj.on === undefined){
     }, function (e) {
         // console.log("Error occurred " + e);
     });
-  }
-
-  public onTap() {
-    this._counter--;
-    this.updateMessage();
-  }
-
-  private updateMessage() {
-    if (this._counter <= 0) {
-      this.message = 'Hoorraaay! You unlocked the NativeScript clicker achievement!';
-    } else {
-      this.message = `${this._counter} taps left`;
-    }
   }
 
   public RGB(red,green,blue){

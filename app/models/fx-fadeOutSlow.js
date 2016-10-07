@@ -1,7 +1,6 @@
 "use strict";
 var http = require("http");
 var color_converter_1 = require("../libs/color-converter");
-var mp3_horror_1 = require("./mp3-horror");
 function runFXmain() {
     console.log("poep !!!!!");
     var lightsAmount;
@@ -62,7 +61,6 @@ function runFXmain() {
             // console.log("Error occurred " + e);
         });
     }
-    mp3_horror_1.mp3IntenseHorror();
 }
 function fXfadeOutSlow() { runFXmain(); }
 exports.fXfadeOutSlow = fXfadeOutSlow;

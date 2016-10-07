@@ -1,18 +1,11 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
   <StackLayout>
-    <Label text="Tap the button" class="title"/>
-    <Button text="TAP" tap="{{ onTap }}" />
-    <Label text="{{ message }}" class="message" textWrap="true"/>
     <!-- Button text="ON" tap="{{ setOn() }}" / -->
-    <Button text="OFF" tap="{{ setOff }}" />
-    <Label text="###################" class="title"/>
+    <!-- Button text="OFF" tap="{{ setOff }}" / -->
+      
     <Button text="Get Data" tap="{{ Data }}" />
-    <Button text="FX-Flash" tap="{{ FX }}" />
+    <Button text="FX-Flash" tap="{{ FX }}" style="color: white; background-color: red; height: 100; margin-top: 60"/>
 
-    <Button text="Theme-Haunted" tap="{{ Haunted }}" />
-
-    <Button text="Click!" tap="Clicker" /> 
-
-    <Label text="{{ someProperty }}" class="someProperty" textWrap="true" />
+    <!-- Button text="Theme-Haunted" tap="{{ Haunted }}" / -->
   </StackLayout>
 </Page>

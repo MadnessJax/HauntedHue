@@ -3,8 +3,6 @@ import http = require("http");
 
 import { RGB } from "../libs/color-converter";
 
-import  * as mp3IntenseHorror from "./mp3-horror";
-
 function runFXmain() {
 
   console.log("poep !!!!!");
@@ -72,9 +70,6 @@ if(obj.on === undefined){
         // console.log("Error occurred " + e);
     });
   }
-    
-  mp3IntenseHorror();
-
 }
 
 export function fXfadeOutSlow() { runFXmain(); }
