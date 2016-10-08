@@ -6,6 +6,8 @@ var sound = require("nativescript-sound");
 import  { fXfadeOutSlow } from "./fx-fadeOutSlow";
 import  { mp3IntenseHorror } from "./mp3-horror";
 
+import { connect } from "../config";
+ 
 
 export class LivingSceneModel extends Observable {
 

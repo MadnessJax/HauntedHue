@@ -1,5 +1,8 @@
 import { EventData } from 'data/observable';
+
 import { Page } from 'ui/page';
+import tabViewModule = require("ui/tab-view");
+ 
 import { LivingSceneModel } from './models/main-view-model';
 // import { FirstEffectModel } from './models/first-effect-model';
 

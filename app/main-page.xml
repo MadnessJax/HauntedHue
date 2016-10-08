@@ -1,15 +1,39 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">
-    <StackLayout orientation="vertical">        
-        <!-- Button text="ON" tap="{{ setOn() }}" / -->
-        <!-- Button text="OFF" tap="{{ setOff }}" / -->
-        <!-- Button text="Get Data" tap="{{ Data }}" / -->
-        <!-- Button text="Theme-Haunted" tap="{{ Haunted }}" / -->
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">        
+    <TabView tabsBackgroundColor="#151515" selectedColor="red">
+        <TabView.items>
+            
+            
+                        <TabViewItem title="SETTINGS">
+                <TabViewItem.view>
+                    <StackLayout>
+                        <Button class="config" text="Config" tap="{{ btnConfig }}" /> 
+                    </StackLayout>
+                </TabViewItem.view>
+            </TabViewItem>
+            
+            
+            <TabViewItem title="THEMES">
+                <TabViewItem.view>
+                    <StackLayout>
+                    <!-- Button text="ON" tap="{{ setOn() }}" / -->
+                    <!-- Button text="OFF" tap="{{ setOff }}" / -->
+                    <!-- Button text="Get Data" tap="{{ Data }}" / -->
+                    <!-- Button text="Theme-Haunted" tap="{{ Haunted }}" / -->
+                    <Button class="first" text="[ PlaceHolder ]" />
+                    <Button class="IntenseHorror" text="Intense Horror" tap="{{ btnIntenseHorror }}" />
+                    <Button class="third" text="[ PlaceHolder ]" /> 
+                </StackLayout>
+                </TabViewItem.view>
+            </TabViewItem>
+            
+            
+
+            
+            
+            
+            
+        </TabView.items>
         
-        <Button class="first" text="[ PlaceHolder ]" />
         
-        <Button class="IntenseHorror" text="Intense Horror" tap="{{ btnIntenseHorror }}" />
-        
-        <Button class="third" text="[ PlaceHolder ]" />
-        
-    </StackLayout>
+    </TabView>
 </Page>

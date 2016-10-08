@@ -1,5 +1,6 @@
 Page {
-    background-image: ~/images/first-hue-app-setup.jpg;
+    /* background-image: ~/images/first-hue-app-setup.jpg; */
+    background-color: black;
     background-size: 100% 100%;
 }
 
@@ -30,4 +31,8 @@ StackLayout Button {
 
 .third {
     background-color: green;
+}
+
+.config {
+    background-color: white;
 }
