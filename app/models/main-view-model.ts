@@ -54,6 +54,10 @@ public Data() {
   return lights();
 }
 
+public btnConfig() {
+    connect();
+}
+
 public btnIntenseHorror(){
     var options : any[];
     var _this = this;

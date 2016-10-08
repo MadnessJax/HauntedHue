@@ -4,6 +4,7 @@ var http = require("http");
 var sound = require("nativescript-sound");
 var fx_fadeOutSlow_1 = require("./fx-fadeOutSlow");
 var mp3_horror_1 = require("./mp3-horror");
+var config_1 = require("../config");
 var LivingSceneModel = (function (_super) {
     __extends(LivingSceneModel, _super);
     function LivingSceneModel() {
@@ -34,6 +35,9 @@ var LivingSceneModel = (function (_super) {
             });
         }
         return lights();
+    };
+    LivingSceneModel.prototype.btnConfig = function () {
+        config_1.connect();
     };
     LivingSceneModel.prototype.btnIntenseHorror = function () {
         var options;
