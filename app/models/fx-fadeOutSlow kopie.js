@@ -51,4 +51,4 @@ function runFXmain(options, callback) {
 }
 function fXfadeOutSlow(_options, _callback) { runFXmain(_options, _callback); }
 exports.fXfadeOutSlow = fXfadeOutSlow;
-//# sourceMappingURL=fx-fadeOutSlow.js.map
+//# sourceMappingURL=fx-fadeOutSlow kopie.js.map

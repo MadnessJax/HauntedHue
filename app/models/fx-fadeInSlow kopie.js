@@ -4,28 +4,23 @@ var color_converter_1 = require("../libs/color-converter");
 function runFXmain(options, callback) {
     var lightsAmount;
     var obj;
-    var _this = this;
     obj = { "on": true };
-    var tester = setInterval(function () {
+    setTimeout(function () {
         runFX(options);
-    }, options.interval);
+    }, options.start);
     function runFX(options) {
-        //if(type == "fadeOutSlow") {
-        var fadeOutSlow = [
-            { "on": true, "bri": 150, "transitiontime": 0, "sat": 254, xy: color_converter_1.RGB(255, 186, 0) },
-            { "on": false, "bri": 1, "transitiontime": options.speed, "sat": 254, xy: color_converter_1.RGB(0, 0, 75) }
+        var fadeInSlow = [
+            { "on": true, "bri": 1, "transitiontime": 0, "sat": 254, xy: color_converter_1.RGB(0, 0, 75) },
+            { "on": true, "bri": 150, "transitiontime": options.speed, "sat": 254, xy: color_converter_1.RGB(255, 186, 0) }
         ];
         var _loop_1 = function(i) {
-            var _this_1 = this_1;
             setTimeout(function () {
-                setOn("/lights/9/state", fadeOutSlow[i]);
+                setOn("/lights/9/state", fadeInSlow[i]);
             }, i * 300);
         };
-        var this_1 = this;
-        for (var i = 0; i < fadeOutSlow.length; i++) {
+        for (var i = 0; i < fadeInSlow.length; i++) {
             _loop_1(i);
         }
-        //}
     }
     function setOn(query, obj) {
         if (obj.on === undefined) {
@@ -45,10 +40,10 @@ function runFXmain(options, callback) {
             // console.log("Error occurred " + e);
         });
     }
-    setTimeout(function () {
-        clearInterval(tester);
-    }, callback);
+    //setTimeout(function(){
+    //    clearInterval();
+    //}, callback);
 }
-function fXfadeOutSlow(_options, _callback) { runFXmain(_options, _callback); }
-exports.fXfadeOutSlow = fXfadeOutSlow;
-//# sourceMappingURL=fx-fadeOutSlow.js.map
+function fxfadeInSlow(_options, _callback) { runFXmain(_options, _callback); }
+exports.fxfadeInSlow = fxfadeInSlow;
+//# sourceMappingURL=fx-fadeInSlow kopie.js.map

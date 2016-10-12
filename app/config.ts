@@ -88,6 +88,22 @@ function getHueRouterInfo(ip){
 }
 
 
+/*get light ammount example*/
+
+//this.Data().then(function(res){ _this.lightsAmount = Object.keys(res).length; });
+
+/*
+public Data() {
+  function lights () {
+    return http.request({
+      url: "http://192.168.192.56/api/gpxQW1KZNAvvdlNpApdLJbabNHl9Y2tu0UgSsxg5/lights", 
+      method: "GET" }).then(function (response) {
+      return response.content.toJSON();
+    });
+  }
+  return lights();
+}
+*/
 
 
 export function connect() { runConfig(); }
