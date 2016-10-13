@@ -1,6 +1,6 @@
 "use strict";
-var http = require("http");
 var color_converter_1 = require("../libs/color-converter");
+var api_seton_1 = require("../libs/api-seton");
 function runFXmain(options, callback) {
     var lightsAmount;
     var obj;
@@ -15,30 +15,12 @@ function runFXmain(options, callback) {
         ];
         var _loop_1 = function(i) {
             setTimeout(function () {
-                setOn("/lights/9/state", fadeInSlow[i]);
+                api_seton_1.setOn("/lights/9/state", fadeInSlow[i]);
             }, i * 300);
         };
         for (var i = 0; i < fadeInSlow.length; i++) {
             _loop_1(i);
         }
-    }
-    function setOn(query, obj) {
-        if (obj.on === undefined) {
-            obj = { "on": true };
-        }
-        else {
-            obj = obj;
-        }
-        http.request({
-            url: "http://192.168.192.56/api/gpxQW1KZNAvvdlNpApdLJbabNHl9Y2tu0UgSsxg5" + query,
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            content: JSON.stringify(obj)
-        }).then(function (response) {
-            // alert(response);
-        }, function (e) {
-            // console.log("Error occurred " + e);
-        });
     }
     //setTimeout(function(){
     //    clearInterval();

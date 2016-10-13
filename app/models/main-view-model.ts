@@ -42,14 +42,12 @@ export class LivingSceneModel extends Observable {
 
     // TODO add target option to all functions 
     public btnIntenseHorror(){
-
-        fxflashFX           ({"start" : 2000}, 5000);
+        fxflashFX            ({  "start" : 2000}, 5000);
         // fXfadeOutSlow     ({  "start" : 0,        "speed" : 1     }, 50000);
         // fxfadeInSlow      ({  "start" : 3000,     "speed" : 50    }, 50000); //speed is 50 == 5 seconde
         // fxflashFXMulti    ({  "start" : 13000,    "amount": 2     }, 50000);
         // fxflashFXMulti    ({  "start" : 16000,    "amount": 2     }, 50000);
         // fxfadeInOutLoop   ({  "start" : 5000,     "loop"  : 30,   "speed" : 2.5   }, 6000);
-
         mp3IntenseHorror();
     }
 }
