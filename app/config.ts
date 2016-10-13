@@ -107,3 +107,8 @@ public Data() {
 
 
 export function connect() { runConfig(); }
+//export function ip() { return findIP(); }
+export const ip = "192.168.192.56";
+
+
+

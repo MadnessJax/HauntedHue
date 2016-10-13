@@ -80,4 +80,6 @@ public Data() {
 */
 function connect() { runConfig(); }
 exports.connect = connect;
+//export function ip() { return findIP(); }
+exports.ip = "192.168.192.56";
 //# sourceMappingURL=config.js.map
