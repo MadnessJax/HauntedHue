@@ -1,7 +1,10 @@
 import http = require("http");
+import { connect } from "../config";
 import { ip } from "../config";
+import { apiKey } from "../config";
 
 function _setOn(query, obj) {
+    
         if(obj.on === undefined){
             obj = { "on": true }
         }
@@ -10,7 +13,7 @@ function _setOn(query, obj) {
         }
 
       http.request({
-          url: "http://"+ ip +"/api/gpxQW1KZNAvvdlNpApdLJbabNHl9Y2tu0UgSsxg5" + query,
+          url: "http://"+ ip +"/api/" + apiKey + query,
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           content: JSON.stringify(obj)

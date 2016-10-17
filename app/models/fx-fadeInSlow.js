@@ -3,28 +3,32 @@ var color_converter_1 = require("../libs/color-converter");
 var api_seton_1 = require("../libs/api-seton");
 function runFXmain(options, callback) {
     var lightsAmount;
-    var obj;
-    obj = { "on": true };
+    var looper;
     setTimeout(function () {
         runFX(options);
+        looper = setInterval(function () {
+            runFX(options);
+        }, options.interval);
     }, options.start);
     function runFX(options) {
-        var fadeInSlow = [
-            { "on": true, "bri": 1, "transitiontime": 0, "sat": 254, xy: color_converter_1.RGB(0, 0, 75) },
-            { "on": true, "bri": 150, "transitiontime": options.speed, "sat": 254, xy: color_converter_1.RGB(255, 186, 0) }
+        var fadeOutSlow = [
+            { "on": true, "bri": 150, "transitiontime": 0, "sat": 254, xy: color_converter_1.RGB(255, 186, 0) },
+            { "on": false, "bri": 1, "transitiontime": options.speed, "sat": 254, xy: color_converter_1.RGB(0, 0, 75) }
         ];
         var _loop_1 = function(i) {
+            var _this = this_1;
             setTimeout(function () {
-                api_seton_1.setOn("/lights/9/state", fadeInSlow[i]);
+                api_seton_1.setOn("/lights/9/state", fadeOutSlow[i]);
             }, i * 300);
         };
-        for (var i = 0; i < fadeInSlow.length; i++) {
+        var this_1 = this;
+        for (var i = 0; i < fadeOutSlow.length; i++) {
             _loop_1(i);
         }
     }
-    //setTimeout(function(){
-    //    clearInterval();
-    //}, callback);
+    setTimeout(function () {
+        clearInterval(looper);
+    }, callback);
 }
 function fxfadeInSlow(_options, _callback) { runFXmain(_options, _callback); }
 exports.fxfadeInSlow = fxfadeInSlow;

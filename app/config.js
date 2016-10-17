@@ -1,25 +1,41 @@
 "use strict";
 var http = require("http");
-// this wil be created and stored in localstorage/file
-var tmp = "gpxQW1KZNAvvdlNpApdLJbabNHl9Y2tu0UgSsxg5";
+var applicationSettings = require("application-settings");
+var applicationKey = applicationSettings.getString("apiKey");
 function runConfig() {
-    //findIP();
-    //runGet();
-    findIP().then(function (res) {
-        // major todo add more logic for detection this is simple N-UPnP.
-        // see for more info: http://www.developers.meethue.com/documentation/hue-bridge-discovery
-        var ip = res.replace("[{", "").replace("}]", "").replace(/"/g, '').split(":")[2];
-        //createConnection(ip).then(function(res2){
-        //    console.log(res2);
-        //createNewConnection().then(function(res3) {
-        //outputs the value that will be stored in localstorage see var tmp.
-        ///console.log(res3[0].success.username);
-        //});
-        //});
-        getHueRouterInfo(ip).then(function (res2) {
-            console.log(res2);
+    console.log(applicationSettings.getString("ipAddress"));
+    console.log(applicationSettings.getString("apiKey"));
+    if (applicationSettings.getString("apiKey") === undefined) {
+        findIP().then(function (res) {
+            // major todo add more logic for detection this is simple N-UPnP.
+            // see for more info: http://www.developers.meethue.com/documentation/hue-bridge-discovery
+            var ip = res.replace("[{", "").replace("}]", "").replace(/"/g, '').split(":")[2];
+            if (applicationSettings.getString("ipAddress") === undefined) {
+                applicationSettings.setString("ipAddress", ip);
+            }
+            createConnection(ip).then(function (res2) {
+                //console.log(res2);
+                var checkConnection = setInterval(function () {
+                    createNewConnection().then(function (userResult) {
+                        if (userResult.toString().indexOf("link button not pressed") > 0) {
+                            console.log("Not Connected Yet. Hit Hue Bridge Too Connect App. And Wait");
+                        }
+                        else {
+                            clearInterval(checkConnection);
+                            console.log("App is already Connected to bridge");
+                            console.log(userResult.toString().split('"')[5]);
+                            applicationSettings.setString("apiKey", userResult.toString().split('"')[5]);
+                        }
+                    });
+                }, 15000);
+            });
+            // getHueBridgeInfo(ip).then(function(result){
+            //    if(applicationSettings.setString("bridgeState") === undefined){
+            //        applicationSettings.setString("bridgeState", result);
+            //    }
+            //});
         });
-    });
+    }
 }
 function findIP() {
     return http.request({
@@ -30,8 +46,11 @@ function findIP() {
 }
 // if no connection exsists then run this (creates new user)
 function createConnection(ip) {
+    if (applicationSettings.getString("createdID") === undefined) {
+        applicationSettings.setString("createdID", createAppID());
+    }
     return http.request({
-        url: "http://" + ip + "/api/" + createAppID(),
+        url: "http://" + ip + "/api/" + applicationSettings.getString("createdID"),
         method: "GET" }).then(function (response) {
         return response.content.toString();
     });
@@ -45,21 +64,22 @@ function createAppID() {
 }
 function createNewConnection() {
     return http.request({
-        url: "https://httpbin.org/post",
+        url: "http://" + exports.ip + "/api/",
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        content: JSON.stringify({ "devicetype": "HauntedHue#iphone" }) //TODO get device instead of iphone???
+        content: JSON.stringify({ "devicetype": "HauntedHue#device" })
     }).then(function (response) {
-        // result = response.content.toJSON();
-        // console.log(result);
+        //result = response.content.toJSON();
+        //console.log(response.content.toString());
+        return response.content;
     }, function (e) {
-        // console.log("Error occurred " + e);
+        console.log("Error occurred " + e);
     });
 }
 /*if user already has connection use localstoren here instead of tmp*/
-function getHueRouterInfo(ip) {
+function getHueBridgeInfo(ip) {
     return http.request({
-        url: "http://" + ip + "/api/" + tmp + "/",
+        url: "http://" + ip + "/api/" + applicationSettings.getString("apiKey") + "/",
         method: "GET" }).then(function (response) {
         return response.content.toString();
     });
@@ -81,5 +101,6 @@ public Data() {
 function connect() { runConfig(); }
 exports.connect = connect;
 //export function ip() { return findIP(); }
-exports.ip = "192.168.192.56";
+exports.ip = applicationSettings.getString("ipAddress");
+exports.apiKey = applicationKey;
 //# sourceMappingURL=config.js.map

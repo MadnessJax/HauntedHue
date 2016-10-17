@@ -1,6 +1,7 @@
 "use strict";
 var http = require("http");
 var config_1 = require("../config");
+var config_2 = require("../config");
 function _setOn(query, obj) {
     if (obj.on === undefined) {
         obj = { "on": true };
@@ -9,7 +10,7 @@ function _setOn(query, obj) {
         obj = obj;
     }
     http.request({
-        url: "http://" + config_1.ip + "/api/gpxQW1KZNAvvdlNpApdLJbabNHl9Y2tu0UgSsxg5" + query,
+        url: "http://" + config_1.ip + "/api/" + config_2.apiKey + query,
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         content: JSON.stringify(obj)
