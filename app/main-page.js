@@ -4,7 +4,7 @@ var main_view_model_1 = require('./models/main-view-model');
 function navigatingTo(args) {
     // Get the event sender
     var page = args.object;
-    page.bindingContext = new main_view_model_1.LivingSceneModel();
+    page.bindingContext = new main_view_model_1.mainViewModel(page);
 }
 exports.navigatingTo = navigatingTo;
 //# sourceMappingURL=main-page.js.map

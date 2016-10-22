@@ -2,10 +2,14 @@
 var http = require("http");
 var applicationSettings = require("application-settings");
 var applicationKey = applicationSettings.getString("apiKey");
-function runConfig() {
+function runConfig(page) {
     console.log(applicationSettings.getString("ipAddress"));
     console.log(applicationSettings.getString("apiKey"));
-    if (applicationSettings.getString("apiKey") === undefined) {
+    if (applicationSettings.getString("apiKey") === undefined || applicationSettings.getString("apiKey") === "description") {
+        page.css =
+            "Button { visibility: collapsed }" +
+                ".spinner{ visibility: visible }" +
+                ".bridge { visibility: visible  }";
         findIP().then(function (res) {
             // major todo add more logic for detection this is simple N-UPnP.
             // see for more info: http://www.developers.meethue.com/documentation/hue-bridge-discovery
@@ -14,20 +18,27 @@ function runConfig() {
                 applicationSettings.setString("ipAddress", ip);
             }
             createConnection(ip).then(function (res2) {
-                //console.log(res2);
                 var checkConnection = setInterval(function () {
-                    createNewConnection().then(function (userResult) {
+                    createNewConnection(ip).then(function (userResult) {
                         if (userResult.toString().indexOf("link button not pressed") > 0) {
+                            page.css =
+                                "Button { visibility: collapsed }" +
+                                    ".spinner{ visibility: visible }" +
+                                    ".bridge { visibility: visible  }";
                             console.log("Not Connected Yet. Hit Hue Bridge Too Connect App. And Wait");
                         }
                         else {
                             clearInterval(checkConnection);
-                            console.log("App is already Connected to bridge");
+                            page.css =
+                                "Button { visibility: visible }" +
+                                    ".spinner{ visibility: collapsed }" +
+                                    ".bridge { visibility: collapsed  }";
+                            console.log("App is already Connected to bridge.");
                             console.log(userResult.toString().split('"')[5]);
                             applicationSettings.setString("apiKey", userResult.toString().split('"')[5]);
                         }
                     });
-                }, 15000);
+                }, 5000);
             });
             // getHueBridgeInfo(ip).then(function(result){
             //    if(applicationSettings.setString("bridgeState") === undefined){
@@ -62,9 +73,9 @@ function createAppID() {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return text;
 }
-function createNewConnection() {
+function createNewConnection(ip) {
     return http.request({
-        url: "http://" + exports.ip + "/api/",
+        url: "http://" + ip + "/api/",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         content: JSON.stringify({ "devicetype": "HauntedHue#device" })
@@ -98,7 +109,7 @@ public Data() {
   return lights();
 }
 */
-function connect() { runConfig(); }
+function connect(page) { runConfig(page); }
 exports.connect = connect;
 //export function ip() { return findIP(); }
 exports.ip = applicationSettings.getString("ipAddress");

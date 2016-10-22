@@ -5,11 +5,21 @@ import http = require("http");
 var applicationSettings = require("application-settings");
 var applicationKey = applicationSettings.getString("apiKey");
 
-function runConfig() {
+import dialogs = require("ui/dialogs");
+
+
+
+function runConfig(page) {
     console.log(applicationSettings.getString("ipAddress"));
     
     console.log(applicationSettings.getString("apiKey"));
-    if(applicationSettings.getString("apiKey") === undefined){
+    if(applicationSettings.getString("apiKey") === undefined || applicationSettings.getString("apiKey") === "description"){
+        
+        page.css = 
+            "Button { visibility: collapsed }" + 
+            ".spinner{ visibility: visible }" + 
+            ".bridge { visibility: visible  }";
+        
         findIP().then(function(res){
             // major todo add more logic for detection this is simple N-UPnP.
             // see for more info: http://www.developers.meethue.com/documentation/hue-bridge-discovery
@@ -18,21 +28,56 @@ function runConfig() {
             if(applicationSettings.getString("ipAddress") === undefined) {
                 applicationSettings.setString("ipAddress", ip);
             }
+            
+           
 
             createConnection(ip).then(function(res2){
-                //console.log(res2);
-                var checkConnection = setInterval (function() {
-                    createNewConnection().then(function(userResult) {
+                
+                var checkConnection = setInterval (() => {
+                    createNewConnection(ip).then((userResult) => {
                         if(userResult.toString().indexOf("link button not pressed") > 0){
+                            
+                            page.css = 
+                                "Button { visibility: collapsed }" + 
+                                ".spinner{ visibility: visible }" + 
+                                ".bridge { visibility: visible  }";
+                            
                             console.log("Not Connected Yet. Hit Hue Bridge Too Connect App. And Wait");
+                            
+
+                            /* page.css = "button { visibility: collapsed }";
+                                dialogs.action({
+                                message: "HauntedHouse found no existing connection. Please Hit the Button On Your Hue Bridge.",
+                                cancelButtonText: "Cancel",
+                                actions: ["Continue (recommended)", "Manual IP (reset all values)"]
+                            }).then(result => {
+
+                                setTimeout(() => {
+                                    page.css = "button { visibility: visible }";
+                                    page.css = ".spinner { visibility: collapsed }";
+
+                                    if (result == "Manual IP (reset all values)"){
+                                        applicationSettings.clear();
+                                    }
+
+                                }, 5000); 
+                                console.log("Dialog result: " + result);
+                            });*/
+                            
                         }else{
                             clearInterval(checkConnection);
-                            console.log("App is already Connected to bridge");
+                            
+                            page.css = 
+                                "Button { visibility: visible }" + 
+                                ".spinner{ visibility: collapsed }" + 
+                                ".bridge { visibility: collapsed  }";
+                            
+                            console.log("App is already Connected to bridge.");
                             console.log(userResult.toString().split('"')[5]);
                             applicationSettings.setString("apiKey", userResult.toString().split('"')[5]);
                         }
                     });
-                }, 15000);
+                }, 5000);
 
             });
 
@@ -76,7 +121,7 @@ function createConnection(ip) {
     }
 
 
-function createNewConnection() {
+function createNewConnection(ip) {
     return http.request({
         url: "http://" + ip + "/api/",
         method: "POST",
@@ -123,7 +168,7 @@ public Data() {
 */
 
 
-export function connect() { runConfig(); }
+export function connect(page) { runConfig(page); }
 //export function ip() { return findIP(); }
 export const ip = applicationSettings.getString("ipAddress");
 export const apiKey = applicationKey;

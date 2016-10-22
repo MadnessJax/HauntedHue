@@ -5,12 +5,12 @@ import { apiKey } from "../config";
 
 function _setOn(query, obj) {
     
-        if(obj.on === undefined){
-            obj = { "on": true }
-        }
-        else{
-            obj = obj
-        }
+    if(obj.on === undefined){
+        obj = { "on": true }
+    }
+    else{
+        obj = obj
+    }
 
       http.request({
           url: "http://"+ ip +"/api/" + apiKey + query,

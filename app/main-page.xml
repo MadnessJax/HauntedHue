@@ -3,7 +3,24 @@
         <TabView.items>
             
             
-                        <TabViewItem title="SETTINGS">
+            <TabViewItem title="THEMES">
+                <TabViewItem.view>
+                    <StackLayout>
+                        <ActivityIndicator class="spinner" busy="test" />
+                        <Label class="spinner" text="Please Wait" />
+                        <Label class="spinner" text="While Connecting To Hue Bridge" />
+                        <Label class="bridge" text="Bridge Found! Please Hit The Button" />
+                        <Label class="bridge" text="On Your Bridge To Allow Connetion." />
+                        
+                        <Button class="first" text="[ PlaceHolder ]" />
+                        <Button class="IntenseHorror" text="Intense Horror" tap="{{ btnIntenseHorror }}" />
+                        <Button class="third" text="[ PlaceHolder ]" /> 
+                    </StackLayout>
+                </TabViewItem.view>
+            </TabViewItem>
+            
+            
+            <TabViewItem title="SETTINGS">
                 <TabViewItem.view>
                     <StackLayout>
                         <Button class="config" text="Config" tap="{{ btnConfig }}" /> 
@@ -11,29 +28,6 @@
                 </TabViewItem.view>
             </TabViewItem>
             
-            
-            <TabViewItem title="THEMES">
-                <TabViewItem.view>
-                    <StackLayout>
-                    <!-- Button text="ON" tap="{{ setOn() }}" / -->
-                    <!-- Button text="OFF" tap="{{ setOff }}" / -->
-                    <!-- Button text="Get Data" tap="{{ Data }}" / -->
-                    <!-- Button text="Theme-Haunted" tap="{{ Haunted }}" / -->
-                    <Button class="first" text="[ PlaceHolder ]" />
-                    <Button class="IntenseHorror" text="Intense Horror" tap="{{ btnIntenseHorror }}" />
-                    <Button class="third" text="[ PlaceHolder ]" /> 
-                </StackLayout>
-                </TabViewItem.view>
-            </TabViewItem>
-            
-            
-
-            
-            
-            
-            
         </TabView.items>
-        
-        
     </TabView>
 </Page>

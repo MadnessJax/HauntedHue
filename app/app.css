@@ -10,6 +10,24 @@ StackLayout {
     opacity: 0.5
 }
 
+ActivityIndicator {
+    color: white;
+    margin-top: 40%;
+}
+
+Label {
+    color: white;
+    text-align: center; 
+}
+
+.bridge {
+    visibility: collapse;
+}
+
+.spinner {
+    visibility: collapse;
+}
+
 StackLayout Button {
     height: 115;
     

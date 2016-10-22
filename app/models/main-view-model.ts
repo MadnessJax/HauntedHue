@@ -11,26 +11,52 @@ import  { fxfadeInOutLoop } from "./fx-fadeInOutLoop";
 import  { mp3IntenseHorror } from "./mp3-horror";
 
 import { connect } from "../config";
- 
+         
+import imageModule = require("ui/image");
+import LabelModule = require("ui/label");
+import activityIndicatorModule = require("ui/activity-indicator");
 
-export class LivingSceneModel extends Observable {
+var applicationSettings = require("application-settings");
+
+
+export class mainViewModel extends Observable {
     
-    constructor() {
+    public page;
+    
+    
+    constructor(_page) {
         super();
-        //console.log(apiKey);        
+                                   
+        this.page = _page;
+        //console.log(apiKey);   
+                var indicator = new activityIndicatorModule.ActivityIndicator(); 
+        var image = new imageModule.Image();
+                image.src = "http://download.thinkbroadband.com/1GB.zip?test";
+        var indicator = new activityIndicatorModule.ActivityIndicator();
+
+
+        // Bind the busy property of the indicator to the isLoading property of the image
+        indicator.bind({
+            sourceProperty: "isLoading",
+            targetProperty: "busy"
+        }, image);
+        
+        //this.page.css = ".spinner { visibility: collapsed }";
     }
 
-    private runGet(){
+    /* private runGet(){
         return http.request({
             url: "http://"+ ip +"/" + apiKey, 
             method: "GET" }).then(function (response) {
              return response.content.toString();
         });
-    }
+    } */
 
 
     public btnConfig() {
-        connect();
+        //connect(_page);
+        //Manual config
+        applicationSettings.clear();
     }
 
     /*---------------------------------------------------------------------
@@ -44,28 +70,39 @@ export class LivingSceneModel extends Observable {
     ---------------------------------------------------------------------*/
 
     // TODO add target option to all functions 
-    public btnIntenseHorror(){
-        this.keyCheck();
-        //fxflashFX         ({  "start" : 2000}, 5000);  
-        //fXfadeOutSlow     ({  "start" : 0,        "speed" : 50     }, 50000); //speed is 50 == 5 seconde
-        fxfadeInSlow      ({  "start" : 2800,     "interval" : 3150,    "speed" : 2  }, 15000);
-        fxflashFXMulti    ({  "start" : 14767,    "amount": 2     }, 50000);
-        fxflashFXMulti    ({  "start" : 15767,    "amount": 2     }, 50000);
-        fxflashFXMulti    ({  "start" : 16767,    "amount": 2     }, 50000);
-        
-        fxflashFXMulti    ({  "start" : 18767,    "amount": 2     }, 50000);
-        fxflashFXMulti    ({  "start" : 19767,    "amount": 2     }, 50000);
-        fxflashFXMulti    ({  "start" : 20767,    "amount": 2     }, 50000);
-        
-        
-        //fxflashFXMulti    ({  "start" : 16000,    "amount": 2     }, 50000);
-        //fxfadeInOutLoop   ({  "start" : 5000,     "loop"  : 30,   "speed" : 2.5   }, 6000);
-        mp3IntenseHorror();
+    
+    
+    
+    
+    public btnIntenseHorror() {
+        if(apiKey === undefined || apiKey === "description") {
+            connect(this.page);
+        } else {
+            //fxflashFX         ({  "start" : 2000}, 5000);  
+            //fXfadeOutSlow     ({  "start" : 0,        "speed" : 50     }, 50000); //speed is 50 == 5 seconde
+            fxfadeInSlow      ({  "start" : 2800,     "interval" : 3150,    "speed" : 2  }, 15000);
+            fxflashFXMulti    ({  "start" : 14767,    "amount": 2     }, 50000);
+            fxflashFXMulti    ({  "start" : 15767,    "amount": 2     }, 50000);
+            fxflashFXMulti    ({  "start" : 16767,    "amount": 2     }, 50000);
+
+            fxflashFXMulti    ({  "start" : 18767,    "amount": 2     }, 50000);
+            fxflashFXMulti    ({  "start" : 19767,    "amount": 2     }, 50000);
+            fxflashFXMulti    ({  "start" : 20767,    "amount": 2     }, 50000);
+
+
+            //fxflashFXMulti    ({  "start" : 16000,    "amount": 2     }, 50000);
+            //fxfadeInOutLoop   ({  "start" : 5000,     "loop"  : 30,   "speed" : 2.5   }, 6000);
+            mp3IntenseHorror();
+        }
     }
     
-    public keyCheck(){
-        if(apiKey === undefined){
-            alert("Run Configuration first!");
+    
+    
+    
+    public keyCheck(_page) {
+        console.log("apiKey: " + apiKey);
+        if(apiKey === undefined || apiKey === "description") {
+            connect(_page);
         }
     }
     
