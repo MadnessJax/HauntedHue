@@ -31,7 +31,7 @@ function runFXmain(options, callback) {
 
           for(let i = 0; i < flashFX.length; i++){
             setTimeout(function(){
-              setOn("/lights/"+ options.amount +"/state", flashFX[i]);
+              setOn("/lights/"+ options.target +"/state", flashFX[i]);
             }, i * 100);
           }
     }

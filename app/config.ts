@@ -80,12 +80,6 @@ function runConfig(page) {
                 }, 5000);
 
             });
-
-            // getHueBridgeInfo(ip).then(function(result){
-            //    if(applicationSettings.setString("bridgeState") === undefined){
-            //        applicationSettings.setString("bridgeState", result);
-            //    }
-            //});
         });
     }
 }
@@ -139,13 +133,11 @@ function createNewConnection(ip) {
 
 
 
-
-/*if user already has connection use localstoren here instead of tmp*/
-function getHueBridgeInfo(ip){
+function getHueBridgeInfo(){
     return http.request({
-        url: "http://"+ip+"/api/"+ applicationSettings.getString("apiKey") + "/", 
+        url: "http://" + applicationSettings.getString("ipAddress") + "/api/"+ applicationSettings.getString("apiKey") + "/", 
         method: "GET" }).then(function (response) {
-    return response.content.toString();
+    return response;
     });
 }
 
@@ -167,11 +159,56 @@ public Data() {
 }
 */
 
+(function(){
+    getHueBridgeInfo().then(function(result){
+        
+        // amount of lights in bridge
+        //console.log(Object.keys(result.content.toJSON()["lights"]).length);
+
+        // bulb names in bridge
+        var lightsArray = [];
+        
+        // todo: also place this in application settings
+        var lightsArraySelected = ["map_Starts_At_One_Not_Zero", 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
+        
+        var configuredLights = [];
+        Object.keys(result.content.toJSON()["lights"]).map(function(k) {
+            lightsArray.push([k, result.content.toJSON()["lights"][k]["name"], lightsArraySelected[k]]);
+        });
+        
+        for(let i=0; i<lightsArray.length; i++){
+            if(lightsArray[i][2] == 1) {
+                //console.log(lightsArray[i][0]);
+                configuredLights.push(lightsArray[i][0]);
+            }
+            applicationSettings.setString("targetLights", configuredLights.toString());
+        }
+        
+
+
+        
+        //applicationSettings.setString("lightsArray", lightsArray);
+        //console.log("test");
+        
+        // group names in bridge
+        /* Object.keys(result.content.toJSON()["groups"]).map(function(k) {
+            console.log(result.content.toJSON()["groups"][k]["name"]);
+        }); */
+
+        
+        if(applicationSettings.setString("bridgeState") === undefined){ //TODO remove this and always set at load
+            applicationSettings.setString("bridgeState", result);
+        }
+    });
+}());
+
 
 export function connect(page) { runConfig(page); }
 //export function ip() { return findIP(); }
 export const ip = applicationSettings.getString("ipAddress");
 export const apiKey = applicationKey;
+export const bridgeState = applicationSettings.getString("bridgeState");
+export const targetLights = applicationSettings.getString("targetLights");
 
 
 

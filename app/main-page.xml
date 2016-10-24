@@ -23,7 +23,8 @@
             <TabViewItem title="SETTINGS">
                 <TabViewItem.view>
                     <StackLayout>
-                        <Button class="config" text="Config" tap="{{ btnConfig }}" /> 
+                        <Button class="config" text="reset app" tap="{{ btnConfig }}" />
+                        
                     </StackLayout>
                 </TabViewItem.view>
             </TabViewItem>

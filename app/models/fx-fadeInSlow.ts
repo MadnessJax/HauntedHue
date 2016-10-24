@@ -23,7 +23,7 @@ function runFXmain(options, callback) {
             for(let i = 0; i < fadeOutSlow.length; i++){
                 let _this = this;
                 setTimeout(function(){
-                    setOn("/lights/9/state", fadeOutSlow[i]);
+                    setOn("/lights/"+ options.target +"/state", fadeOutSlow[i]);
                 }, i * 300);
             }
     }

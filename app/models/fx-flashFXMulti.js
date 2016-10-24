@@ -22,7 +22,7 @@ function runFXmain(options, callback) {
         ];
         var _loop_1 = function(i) {
             setTimeout(function () {
-                api_seton_1.setOn("/lights/" + options.amount + "/state", flashFX[i]);
+                api_seton_1.setOn("/lights/" + options.target + "/state", flashFX[i]);
             }, i * 100);
         };
         for (var i = 0; i < flashFX.length; i++) {

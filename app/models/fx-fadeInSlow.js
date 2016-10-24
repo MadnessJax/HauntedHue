@@ -18,7 +18,7 @@ function runFXmain(options, callback) {
         var _loop_1 = function(i) {
             var _this = this_1;
             setTimeout(function () {
-                api_seton_1.setOn("/lights/9/state", fadeOutSlow[i]);
+                api_seton_1.setOn("/lights/" + options.target + "/state", fadeOutSlow[i]);
             }, i * 300);
         };
         var this_1 = this;
