@@ -1,6 +1,23 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo">        
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="onPageLoaded">        
     <TabView tabsBackgroundColor="#151515" selectedColor="red">
         <TabView.items>
+            
+            
+            <TabViewItem title="SETTINGS">
+                <TabViewItem.view>
+                    <StackLayout>
+                        <Button class="config" text="reset app" tap="{{ btnConfig }}" />
+                        <ListView id="listview" items="{{ lightList }}" itemTap="{{ lightListTap }}">
+                            <ListView.itemTemplate>
+                                <StackLayout orientation="horizontal">
+                                <Label text="{{ id + ' ' }}" />
+                                <Label text="{{ title }}" />
+                                </StackLayout>
+                            </ListView.itemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </TabViewItem.view>
+            </TabViewItem>
             
             
             <TabViewItem title="THEMES">
@@ -20,14 +37,7 @@
             </TabViewItem>
             
             
-            <TabViewItem title="SETTINGS">
-                <TabViewItem.view>
-                    <StackLayout>
-                        <Button class="config" text="reset app" tap="{{ btnConfig }}" />
-                        
-                    </StackLayout>
-                </TabViewItem.view>
-            </TabViewItem>
+
             
         </TabView.items>
     </TabView>

@@ -54,3 +54,11 @@ StackLayout Button {
 .config {
     background-color: white;
 }
+
+ListView {
+    background-color: red;
+}
+
+ListView Label {
+    color: red;
+}

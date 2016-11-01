@@ -21,10 +21,21 @@ import activityIndicatorModule = require("ui/activity-indicator");
 var applicationSettings = require("application-settings");
 
 
+
+import listViewModule = require("ui/list-view");
+
+
 export class mainViewModel extends Observable {
     
     public page;
     
+    public listViewItemTap(args) {
+        // Expand your collection bound to the ListView with more items here!
+        console.log(args.object);
+        for(var a in args){
+            console.log(a);
+        }
+    }
     
     constructor(_page) {
         super();
@@ -44,7 +55,15 @@ export class mainViewModel extends Observable {
         }, image);
         
         //this.page.css = ".spinner { visibility: collapsed }";
+
+
+
+
+        
+
+
     }
+
 
     /* private runGet(){
         return http.request({
@@ -58,8 +77,9 @@ export class mainViewModel extends Observable {
     public btnConfig() {
         //connect(_page);
         //Manual config
-        applicationSettings.clear();
+        //applicationSettings.clear();
     }
+    
 
     /*---------------------------------------------------------------------
 
@@ -94,7 +114,7 @@ export class mainViewModel extends Observable {
             //fXfadeOutSlow     ({  "start" : 0,        "speed" : 50     }, 50000); //speed is 50 == 5 seconde
             fxfadeInSlow      ({  "start" : 2800,     "interval" : 3150,    "speed" : 2,    "target": randfxfadeInSlow  }, 15000);
             
-            fxflashFXMulti    ({  "start" : 14767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
+            /* fxflashFXMulti    ({  "start" : 14767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
             fxflashFXMulti    ({  "start" : 15767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
             fxflashFXMulti    ({  "start" : 16767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
 
@@ -124,7 +144,7 @@ export class mainViewModel extends Observable {
             
             fxflashFXMulti    ({  "start" : 42767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
             fxflashFXMulti    ({  "start" : 43767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-            fxflashFXMulti    ({  "start" : 44767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
+            fxflashFXMulti    ({  "start" : 44767,    "amount": 2,     "target": randfxflashFXMulti }, 50000); */
 
             //fxflashFXMulti    ({  "start" : 16000,    "amount": 2     }, 50000);
             //fxfadeInOutLoop   ({  "start" : 5000,     "loop"  : 30,   "speed" : 2.5   }, 6000);

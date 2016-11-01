@@ -1,7 +1,10 @@
 "use strict";
+var observable_1 = require('data/observable');
 var http = require("http");
 var applicationSettings = require("application-settings");
 var applicationKey = applicationSettings.getString("apiKey");
+var observableArray = require("data/observable-array");
+var myItems = new observableArray.ObservableArray();
 function runConfig(page) {
     console.log(applicationSettings.getString("ipAddress"));
     console.log(applicationSettings.getString("apiKey"));
@@ -103,41 +106,72 @@ public Data() {
   return lights();
 }
 */
-(function () {
-    getHueBridgeInfo().then(function (result) {
-        // amount of lights in bridge
-        //console.log(Object.keys(result.content.toJSON()["lights"]).length);
-        // bulb names in bridge
-        var lightsArray = [];
-        // todo: also place this in application settings
-        var lightsArraySelected = ["map_Starts_At_One_Not_Zero", 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
-        var configuredLights = [];
-        Object.keys(result.content.toJSON()["lights"]).map(function (k) {
-            lightsArray.push([k, result.content.toJSON()["lights"][k]["name"], lightsArraySelected[k]]);
-        });
-        for (var i = 0; i < lightsArray.length; i++) {
-            if (lightsArray[i][2] == 1) {
-                //console.log(lightsArray[i][0]);
-                configuredLights.push(lightsArray[i][0]);
-            }
-            applicationSettings.setString("targetLights", configuredLights.toString());
-        }
-        //applicationSettings.setString("lightsArray", lightsArray);
-        //console.log("test");
-        // group names in bridge
-        /* Object.keys(result.content.toJSON()["groups"]).map(function(k) {
-            console.log(result.content.toJSON()["groups"][k]["name"]);
-        }); */
-        if (applicationSettings.setString("bridgeState") === undefined) {
-            applicationSettings.setString("bridgeState", result);
-        }
+getHueBridgeInfo().then(function (result) {
+    // amount of lights in bridge
+    applicationSettings.setString("totalLights", Object.keys(result.content.toJSON()["lights"]).length.toString());
+    //console.log(applicationKey);
+    // bulb names in bridge
+    var lightsArray = [];
+    // todo: also place this in application settings
+    var lightsArraySelected = ["map_Starts_At_One_Not_Zero", 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
+    var configuredLightsID = [];
+    var configuredLightsName = [];
+    Object.keys(result.content.toJSON()["lights"]).map(function (k) {
+        lightsArray.push([k, result.content.toJSON()["lights"][k]["name"], lightsArraySelected[k]]);
     });
-}());
+    for (var i = 0; i < lightsArray.length; i++) {
+        if (lightsArray[i][2] == 1) {
+            //console.log(lightsArray[i][0]);
+            configuredLightsID.push(lightsArray[i][0]);
+        }
+        configuredLightsName.push(lightsArray[i][1]);
+        applicationSettings.setString("targetLights", configuredLightsID.toString());
+        applicationSettings.setString("nameOfAllLights", configuredLightsName.toString());
+    }
+    //applicationSettings.setString("lightsArray", lightsArray);
+    //console.log("test");
+    // group names in bridge
+    /* Object.keys(result.content.toJSON()["groups"]).map(function(k) {
+        console.log(result.content.toJSON()["groups"][k]["name"]);
+    }); */
+    if (applicationSettings.setString("bridgeState") === undefined) {
+        applicationSettings.setString("bridgeState", result);
+    }
+});
 function connect(page) { runConfig(page); }
 exports.connect = connect;
 //export function ip() { return findIP(); }
 exports.ip = applicationSettings.getString("ipAddress");
 exports.apiKey = applicationKey;
 exports.bridgeState = applicationSettings.getString("bridgeState");
+exports.totalLights = applicationSettings.getString("totalLights");
+exports.nameOfAllLights = applicationSettings.getString("nameOfAllLights"); //TODO
 exports.targetLights = applicationSettings.getString("targetLights");
+var mainList = (function (_super) {
+    __extends(mainList, _super);
+    function mainList(_page) {
+        _super.call(this);
+        this.lightList = myItems;
+        this.collectItems();
+    }
+    mainList.prototype.collectItems = function () {
+        var name = "";
+        for (var i = 0; i < parseInt(exports.totalLights); i++) {
+            //name = (i+1).toString();
+            name = exports.nameOfAllLights.split(',')[i].toString();
+            //TODO NAME of lights
+            myItems.push({ title: name, id: (i + 1) });
+            if (exports.targetLights.indexOf(myItems.getItem(i).id) > -1) {
+                //console.log(myItems.getItem(i).title + "checked ");
+                myItems.getItem(i).title = myItems.getItem(i).title + " [checked]";
+            }
+        }
+    };
+    mainList.prototype.lightListTap = function (args) {
+        console.log(args.index + 1);
+        console.log(exports.nameOfAllLights.split(',')[args.index].toString());
+    };
+    return mainList;
+}(observable_1.Observable));
+exports.mainList = mainList;
 //# sourceMappingURL=config.js.map
