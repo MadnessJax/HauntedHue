@@ -1,0 +1,12 @@
+{
+  "name": "hauntedhue",
+  "main": "app.js",
+  "version": "2.3.0",
+  "author": "Telerik <support@telerik.com>",
+  "description": "Nativescript hello-world-ts project template",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "nativescript-dev-typescript": "^0.3.2",
+    "typescript": "^2.0.7"
+  }
+}
