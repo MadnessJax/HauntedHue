@@ -1,4 +1,4 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" navigatingTo="navigatingTo" loaded="pageLoaded">     
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">     
     <TabView tabsBackgroundColor="#151515" selectedColor="red">
         <TabView.items>
             
@@ -7,7 +7,7 @@
                 <TabViewItem.view>
                     <StackLayout>
                         <Button class="config" text="reset app" tap="{{ btnConfig }}" />
-                        <ListView id="listview" items="{{ myItems }}" itemTap="{{ lightListTap }}">
+                        <ListView id="listView" items="{{ myItems }}" itemTap="onTap">
                             <ListView.itemTemplate>
                                 <StackLayout orientation="horizontal">
                                 <Label text="{{ id + ' ' }}" />

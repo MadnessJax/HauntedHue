@@ -4,8 +4,9 @@ var applicationSettings = require("application-settings");
 var applicationKey = applicationSettings.getString("apiKey");
 var observableArray = require("data/observable-array");
 var myItems = new observableArray.ObservableArray();
-var observable = require("data/observable");
-var viewModel = new observable.Observable();
+var listView = new observableArray.ObservableArray();
+var view = require("ui/core/view");
+var labelModule = require("ui/label");
 function runConfig(page) {
     console.log(applicationSettings.getString("ipAddress"));
     console.log(applicationSettings.getString("apiKey"));
@@ -47,14 +48,6 @@ function runConfig(page) {
         });
     }
 }
-function pageLoaded(args) {
-    alert("test");
-    var page = args.object;
-    viewModel.set("myItems", [{ id: 0, title: "First", active: 1 }, { id: 0, title: "Second", active: 1 }]);
-    //viewModel.set("test", "Test for parent binding!");
-    page.bindingContext = viewModel;
-}
-exports.pageLoaded = pageLoaded;
 function findIP() {
     return http.request({
         url: "https://www.meethue.com/api/nupnp",
@@ -101,91 +94,85 @@ function getHueBridgeInfo() {
         return response;
     });
 }
-/*get light ammount example*/
-//this.Data().then(function(res){ _this.lightsAmount = Object.keys(res).length; });
-/*
-public Data() {
-  function lights () {
-    return http.request({
-      url: "http://192.168.192.56/api/gpxQW1KZNAvvdlNpApdLJbabNHl9Y2tu0UgSsxg5/lights",
-      method: "GET" }).then(function (response) {
-      return response.content.toJSON();
-    });
-  }
-  return lights();
-}
-*/
-getHueBridgeInfo().then(function (result) {
-    // amount of lights in bridge
-    applicationSettings.setString("totalLights", Object.keys(result.content.toJSON()["lights"]).length.toString());
-    //console.log(applicationKey);
-    // bulb names in bridge
-    var lightsArray = [];
-    // todo: also place this in application settings
-    var lightsArraySelected = ["map_Starts_At_One_Not_Zero", 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
-    var configuredLightsID = [];
-    var configuredLightsName = [];
-    Object.keys(result.content.toJSON()["lights"]).map(function (k) {
-        lightsArray.push([k, result.content.toJSON()["lights"][k]["name"], lightsArraySelected[k]]);
-    });
-    for (var i = 0; i < lightsArray.length; i++) {
-        if (lightsArray[i][2] == 1) {
-            //console.log(lightsArray[i][0]);
-            configuredLightsID.push(lightsArray[i][0]);
+var firstLoad = true;
+var page;
+var pageArgs;
+var lightsAmount = 0;
+var lightsObjectAll = [];
+global.lightsIdUsed = new observableArray.ObservableArray();
+var lightsNameUsed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //todo
+function listRender(args) {
+    // alert("test");
+    page = args.object;
+    pageArgs = args;
+    //global = "global ajustted";
+    //viewModel.set("test", "Test for parent binding!");
+    var result;
+    getHueBridgeInfo().then(function (_result) {
+        // console.log("run bridge info");
+        result = _result;
+        if (firstLoad) {
+            lightsAmount = Object.keys(result.content.toJSON()["lights"]).length;
+            Object.keys(result.content.toJSON()["lights"]).map(function (k) {
+                lightsObjectAll.push({ id: k, title: result.content.toJSON()["lights"][k]["name"], active: 0 });
+                /* console.log("memoery: " + applicationSettings.getString("targetLights"));
+                var i = parseInt(k);
+                 if(applicationSettings.getString("targetLights") !== undefined || applicationSettings.getString("targetLights") !== "") {
+                    if(applicationSettings.getString("targetLights").indexOf(lightsObjectAll[i-1].id) > -1){
+                        console.log(lightsObjectAll[i-1].title + "checked ");
+                        lightsObjectAll[i-1].title = lightsObjectAll[i-1].title + " [checked]";
+                    }
+                    //console.log(global.lightsIdUsed.toString());
+                } */
+            });
+            var _listView = view.getViewById(page, "listView");
+            _listView.refresh();
+            page.bindingContext = listView;
+            listView.set("myItems", lightsObjectAll);
+            firstLoad = false;
         }
-        configuredLightsName.push(lightsArray[i][1]);
+        global.lightsIdUsed = [];
+        Object.keys(result.content.toJSON()["lights"]).map(function (k) {
+            var i = parseInt(k);
+            if (lightsObjectAll[i - 1].title.indexOf("checked") > -1) {
+                lightsObjectAll[i - 1].active = 1;
+            }
+            else {
+                lightsObjectAll[i - 1].active = 0;
+            }
+            if (lightsObjectAll[i - 1].active == 1) {
+                global.lightsIdUsed.push(lightsObjectAll[i - 1].id);
+            }
+            console.log(global.lightsIdUsed.toString());
+            applicationSettings.setString("targetLights", global.lightsIdUsed.toString()); //todo
+        });
+        if (applicationSettings.setString("bridgeState") === undefined) {
+            applicationSettings.setString("bridgeState", result);
+        }
+    });
+}
+exports.listRender = listRender;
+// View
+function listEvents(args) {
+    //console.log(args.index);
+    if (lightsObjectAll[args.index].title.indexOf("checked") == -1) {
+        lightsObjectAll[args.index].title = lightsObjectAll[args.index].title + "[checked]";
+        lightsObjectAll[1].active = 1;
     }
-    //applicationSettings.setString("lightsArray", lightsArray);
-    //console.log("test");
-    // group names in bridge
-    /* Object.keys(result.content.toJSON()["groups"]).map(function(k) {
-        console.log(result.content.toJSON()["groups"][k]["name"]);
-    }); */
-    if (applicationSettings.setString("bridgeState") === undefined) {
-        applicationSettings.setString("bridgeState", result);
+    else {
+        lightsObjectAll[args.index].title = lightsObjectAll[args.index].title.split("[checked]")[0];
+        lightsObjectAll[1].active = 0;
     }
-    var lightsAmount = 0;
-    var lightsNameAll = [];
-    var lightsNameUsed = [];
-    var myList = [{ id: 0, title: "First", active: 1 }, { id: 0, title: "Second", active: 1 }];
-});
+    listRender(pageArgs);
+    var _listView = view.getViewById(page, "listView");
+    _listView.refresh();
+    /* console.log(listview.ios.indexPathForSelectedRow()); */
+}
+exports.listEvents = listEvents;
 function connect(page) { runConfig(page); }
 exports.connect = connect;
 //export function ip() { return findIP(); }
 exports.ip = applicationSettings.getString("ipAddress");
 exports.apiKey = applicationKey;
 exports.bridgeState = applicationSettings.getString("bridgeState");
-//export const totalLights = applicationSettings.getString("totalLights");
-//export const nameOfAllLights = applicationSettings.getString("nameOfAllLights"); //TODO
-//export const targetLights = applicationSettings.getString("targetLights");
-/*
-    
-    constructor(_page) {
-        super();
-        this.collectItems();
-    }
-    
-    public lightList = myItems;
-
-    public collectItems() {
-        var name = "";
-        for (let i=0; i<parseInt(totalLights); i++) {
-            //name = (i+1).toString();
-            name = nameOfAllLights.split(',')[i].toString();
-            
-            //TODO NAME of lights
-            myItems.push({title: name, id: (i+1)});
-            
-            if(targetLights.indexOf(myItems.getItem(i).id) > -1){
-                //console.log(myItems.getItem(i).title + "checked ");
-               myItems.getItem(i).title = myItems.getItem(i).title + " [checked]";
-            }
-        }
-    }
-
-    public lightListTap(args) {
-        console.log(args.index + 1);
-        console.log(nameOfAllLights.split(',')[args.index].toString());
-    }
-} */
 //# sourceMappingURL=config.js.map

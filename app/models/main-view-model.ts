@@ -3,7 +3,7 @@ import http = require("http");
 import { ip } from "../config";
 import { apiKey } from "../config";
 import { bridgeState } from "../config";
-///import { targetLights } from "../config";
+//import { targetLights } from "../config";
 
 import  { fxflashFX } from "./fx-flashFX";
 import  { fXfadeOutSlow } from "./fx-fadeOutSlow";
@@ -19,7 +19,7 @@ import LabelModule = require("ui/label");
 import activityIndicatorModule = require("ui/activity-indicator");
 
 var applicationSettings = require("application-settings");
-
+var targetLights;
 
 
 import listViewModule = require("ui/list-view");
@@ -39,7 +39,7 @@ export class mainViewModel extends Observable {
     
     constructor(_page) {
         super();
-                                   
+          
         this.page = _page;
         //console.log(apiKey);   
                 var indicator = new activityIndicatorModule.ActivityIndicator(); 
@@ -47,6 +47,8 @@ export class mainViewModel extends Observable {
                 image.src = "http://download.thinkbroadband.com/1GB.zip?test";
         var indicator = new activityIndicatorModule.ActivityIndicator();
 
+        targetLights = global.lightsIdUsed;
+        
 
         // Bind the busy property of the indicator to the isLoading property of the image
         indicator.bind({
@@ -55,12 +57,6 @@ export class mainViewModel extends Observable {
         }, image);
         
         //this.page.css = ".spinner { visibility: collapsed }";
-
-
-
-
-        
-
 
     }
 
@@ -77,7 +73,7 @@ export class mainViewModel extends Observable {
     public btnConfig() {
         //connect(_page);
         //Manual config
-        //applicationSettings.clear();
+        //applicationSettings.clear(); 
     }
     
 
@@ -96,25 +92,26 @@ export class mainViewModel extends Observable {
         // * fxfadeInSlow
         // * fxflashFXMulti
         // * 
-    
-    
-    
+
     
     public btnIntenseHorror() {
+        targetLights = global.lightsIdUsed;
         if(apiKey === undefined || apiKey === "description") {
             connect(this.page);
         } else {
             
+            // console.log("targets: " + targetLights); //observable array
+            
             // base: randomiser: var rand = myArray[Math.floor(Math.random() * myArray.length)];
             
-            ///var randfxfadeInSlow = targetLights.split(",")[Math.floor(Math.random() * targetLights.split(",").length)];
-            ///var randfxflashFXMulti = targetLights.split(",")[Math.floor(Math.random() * targetLights.split(",").length)];
+            var randfxfadeInSlow = targetLights[Math.floor(Math.random() * targetLights.length)];
+            var randfxflashFXMulti = targetLights[Math.floor(Math.random() * targetLights.length)];
             
-            //fxflashFX         ({  "start" : 2000}, 5000);  
-            //fXfadeOutSlow     ({  "start" : 0,        "speed" : 50     }, 50000); //speed is 50 == 5 seconde
-            ///fxfadeInSlow      ({  "start" : 2800,     "interval" : 3150,    "speed" : 2,    "target": randfxfadeInSlow  }, 15000);
+            fxflashFX         ({  "start" : 2000}, 5000);  
+            fXfadeOutSlow     ({  "start" : 0,        "speed" : 50     }, 50000); //speed is 50 == 5 seconde
+            fxfadeInSlow      ({  "start" : 2800,     "interval" : 3150,    "speed" : 2,    "target": randfxfadeInSlow  }, 15000);
             
-            /* fxflashFXMulti    ({  "start" : 14767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
+            fxflashFXMulti    ({  "start" : 14767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
             fxflashFXMulti    ({  "start" : 15767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
             fxflashFXMulti    ({  "start" : 16767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
 
@@ -144,19 +141,17 @@ export class mainViewModel extends Observable {
             
             fxflashFXMulti    ({  "start" : 42767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
             fxflashFXMulti    ({  "start" : 43767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-            fxflashFXMulti    ({  "start" : 44767,    "amount": 2,     "target": randfxflashFXMulti }, 50000); */
+            fxflashFXMulti    ({  "start" : 44767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
 
             //fxflashFXMulti    ({  "start" : 16000,    "amount": 2     }, 50000);
             //fxfadeInOutLoop   ({  "start" : 5000,     "loop"  : 30,   "speed" : 2.5   }, 6000);
-            //mp3IntenseHorror();
+            mp3IntenseHorror();
             
             ///console.log("targetLights: ");
             ///console.log(targetLights);
         }
     }
-    
-    
-    
+
     
     public keyCheck(_page) {
         console.log("apiKey: " + apiKey);
