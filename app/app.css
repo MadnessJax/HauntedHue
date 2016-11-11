@@ -60,5 +60,19 @@ ListView {
 }
 
 ListView Label {
-    color: red;
+    color: black;
+    padding: 10;
+    font-weight: bold;
+}
+
+ListView Image {
+    width: 20;
+    height: 20;
+    margin-left: 10;
+}
+
+.lightsConfigTitle {
+    color: white;
+    font-weight: bold;
+    padding: 0 10 30 10;
 }

@@ -101,6 +101,8 @@ var lightsAmount = 0;
 var lightsObjectAll = [];
 global.lightsIdUsed = new observableArray.ObservableArray();
 var lightsNameUsed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; //todo
+//var check = String.fromCharCode(0xf00c);
+var check = "| HAUNTED | ";
 function listRender(args) {
     // alert("test");
     page = args.object;
@@ -115,26 +117,25 @@ function listRender(args) {
             lightsAmount = Object.keys(result.content.toJSON()["lights"]).length;
             Object.keys(result.content.toJSON()["lights"]).map(function (k) {
                 lightsObjectAll.push({ id: k, title: result.content.toJSON()["lights"][k]["name"], active: 0 });
-                /* console.log("memoery: " + applicationSettings.getString("targetLights"));
+                console.log("memoery: " + applicationSettings.getString("targetLights"));
                 var i = parseInt(k);
-                 if(applicationSettings.getString("targetLights") !== undefined || applicationSettings.getString("targetLights") !== "") {
-                    if(applicationSettings.getString("targetLights").indexOf(lightsObjectAll[i-1].id) > -1){
-                        console.log(lightsObjectAll[i-1].title + "checked ");
-                        lightsObjectAll[i-1].title = lightsObjectAll[i-1].title + " [checked]";
+                if (applicationSettings.getString("targetLights") !== undefined || applicationSettings.getString("targetLights") !== "") {
+                    if (applicationSettings.getString("targetLights").indexOf(lightsObjectAll[i - 1].id) > -1) {
+                        lightsObjectAll[i - 1].title = check + lightsObjectAll[i - 1].title;
                     }
-                    //console.log(global.lightsIdUsed.toString());
-                } */
+                }
             });
+            console.log("appdata" + applicationSettings.getString("targetLights"));
             var _listView = view.getViewById(page, "listView");
             _listView.refresh();
             page.bindingContext = listView;
-            listView.set("myItems", lightsObjectAll);
+            listView.set("lights", lightsObjectAll);
             firstLoad = false;
         }
         global.lightsIdUsed = [];
         Object.keys(result.content.toJSON()["lights"]).map(function (k) {
             var i = parseInt(k);
-            if (lightsObjectAll[i - 1].title.indexOf("checked") > -1) {
+            if (lightsObjectAll[i - 1].title.indexOf(check) > -1) {
                 lightsObjectAll[i - 1].active = 1;
             }
             else {
@@ -155,12 +156,12 @@ exports.listRender = listRender;
 // View
 function listEvents(args) {
     //console.log(args.index);
-    if (lightsObjectAll[args.index].title.indexOf("checked") == -1) {
-        lightsObjectAll[args.index].title = lightsObjectAll[args.index].title + "[checked]";
+    if (lightsObjectAll[args.index].title.indexOf(check) == -1) {
+        lightsObjectAll[args.index].title = check + lightsObjectAll[args.index].title;
         lightsObjectAll[1].active = 1;
     }
     else {
-        lightsObjectAll[args.index].title = lightsObjectAll[args.index].title.split("[checked]")[0];
+        lightsObjectAll[args.index].title = lightsObjectAll[args.index].title.split(check)[1];
         lightsObjectAll[1].active = 0;
     }
     listRender(pageArgs);

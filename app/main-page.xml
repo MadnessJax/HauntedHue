@@ -1,20 +1,18 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">     
     <TabView tabsBackgroundColor="#151515" selectedColor="red">
         <TabView.items>
-            
-            
             <TabViewItem title="SETTINGS">
                 <TabViewItem.view>
                     <StackLayout>
-                        <Button class="config" text="reset app" tap="{{ btnConfig }}" />
-                        <ListView id="listView" items="{{ myItems }}" itemTap="onTap">
+                        <Label class="lightsConfigTitle" text="Select which lights should be haunted:" />
+                        <ListView id="listView" items="{{ lights }}" itemTap="onTap">
                             <ListView.itemTemplate>
                                 <StackLayout orientation="horizontal">
-                                <Label text="{{ id + ' ' }}" />
-                                <Label text="{{ title }}" />
+                                    <Image src='http://www.indert.gov.py/application/files/2114/6765/8429/Previous.png' /><Label text="{{ title }}" />
                                 </StackLayout>
                             </ListView.itemTemplate>
                         </ListView>
+                        <Button class="config" text="reset app" tap="{{ btnConfig }}" />
                     </StackLayout>
                 </TabViewItem.view>
             </TabViewItem>
@@ -35,10 +33,6 @@
                     </StackLayout>
                 </TabViewItem.view>
             </TabViewItem>
-            
-            
-
-            
         </TabView.items>
     </TabView>
 </Page>
