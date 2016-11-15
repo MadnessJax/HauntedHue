@@ -148,7 +148,7 @@ export class mainViewModel extends Observable {
 
                 //fxflashFXMulti    ({  "start" : 16000,    "amount": 2     }, 50000);
                 //fxfadeInOutLoop   ({  "start" : 5000,     "loop"  : 30,   "speed" : 2.5   }, 6000);
-                //mp3IntenseHorror();
+                mp3IntenseHorror();
 
                 ///console.log("targetLights: ");
                 ///console.log(targetLights);

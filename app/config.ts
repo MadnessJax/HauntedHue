@@ -166,7 +166,7 @@ global.lightsIdUsed = new observableArray.ObservableArray();
 var lightsNameUsed= [0,0,0,0,0,0,0,0,0,0,0,0,0,0]; //todo
 
 //var check = String.fromCharCode(0xf00c);
-var check = "| HAUNTED | ";
+var check = "";
 
 
 export function listRender(args) {
@@ -189,13 +189,14 @@ export function listRender(args) {
             lightsAmount = Object.keys(result.content.toJSON()["lights"]).length;
             
             Object.keys(result.content.toJSON()["lights"]).map(function(k) {
-                lightsObjectAll.push({id: k, title: result.content.toJSON()["lights"][k]["name"], active: 0});
+                lightsObjectAll.push({id: k, title: result.content.toJSON()["lights"][k]["name"], active: 0, lightIcon: ""});
                 
                 console.log("memoery: " + applicationSettings.getString("targetLights"));
                 var i = parseInt(k);
                  if(applicationSettings.getString("targetLights") !== undefined || applicationSettings.getString("targetLights") !== "") {
                     if(applicationSettings.getString("targetLights").indexOf(lightsObjectAll[i-1].id) > -1){
-                        lightsObjectAll[i-1].title = check + lightsObjectAll[i-1].title;
+                        lightsObjectAll[i-1].lightIcon = "~/images/check-icon.png"; 
+                        //lightsObjectAll[i-1].title = check + lightsObjectAll[i-1].title;
                     }
                     //console.log(global.lightsIdUsed.toString()); 
                 }
@@ -217,7 +218,7 @@ export function listRender(args) {
 
         Object.keys(result.content.toJSON()["lights"]).map(function(k) {
             var i = parseInt(k);
-            if(lightsObjectAll[i-1].title.indexOf(check) > -1){
+            if(lightsObjectAll[i-1].lightIcon.indexOf("png") > -1){
                 lightsObjectAll[i-1].active = 1;
             }
             else{
@@ -246,11 +247,13 @@ export function listRender(args) {
 export function listEvents(args) {
     //console.log(args.index);
     
-    if(lightsObjectAll[args.index].title.indexOf(check) == -1){
-        lightsObjectAll[args.index].title = check + lightsObjectAll[args.index].title;
+    if(lightsObjectAll[args.index].lightIcon.indexOf("png") == -1){
+        lightsObjectAll[args.index].lightIcon = "~/images/check-icon.png";
+        //lightsObjectAll[args.index].title = check + lightsObjectAll[args.index].title;
         lightsObjectAll[1].active = 1;
     }else{
-        lightsObjectAll[args.index].title = lightsObjectAll[args.index].title.split(check)[1];
+        lightsObjectAll[args.index].lightIcon = "";
+        //lightsObjectAll[args.index].title = lightsObjectAll[args.index].title.split(check)[1];
         lightsObjectAll[1].active = 0;
     }
     

@@ -1,22 +1,6 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">     
     <TabView tabsBackgroundColor="#151515" selectedColor="red">
-        <TabView.items>
-            <TabViewItem title="SETTINGS">
-                <TabViewItem.view>
-                    <StackLayout>
-                        <Label class="lightsConfigTitle" text="Select which lights should be haunted:" />
-                        <ListView id="listView" items="{{ lights }}" itemTap="onTap">
-                            <ListView.itemTemplate>
-                                <StackLayout orientation="horizontal">
-                                    <Image src='http://www.indert.gov.py/application/files/2114/6765/8429/Previous.png' /><Label text="{{ title }}" />
-                                </StackLayout>
-                            </ListView.itemTemplate>
-                        </ListView>
-                        <Button class="config" text="reset app" tap="{{ btnConfig }}" />
-                    </StackLayout>
-                </TabViewItem.view>
-            </TabViewItem>
-            
+        <TabView.items>            
             
             <TabViewItem title="THEMES">
                 <TabViewItem.view>
@@ -26,13 +10,30 @@
                         <Label class="spinner" text="While Connecting To Hue Bridge" />
                         <Label class="bridge" text="Bridge Found! Please Hit The Button" />
                         <Label class="bridge" text="On Your Bridge To Allow Connetion." />
-                        
                         <Button class="first" text="[ PlaceHolder ]" />
                         <Button class="IntenseHorror" text="Intense Horror" tap="{{ btnIntenseHorror }}" />
                         <Button class="third" text="[ PlaceHolder ]" /> 
                     </StackLayout>
                 </TabViewItem.view>
             </TabViewItem>
+            
+            <TabViewItem title="SETTINGS">
+                <TabViewItem.view>
+                    <StackLayout>
+                        <Label class="lightsConfigTitle" text="Select which lights should be haunted:" />
+                        <ListView id="listView" items="{{ lights }}" itemTap="onTap">
+                            <ListView.itemTemplate>
+                                <StackLayout orientation="horizontal" class="lightOption">
+                                    <Image src="{{ lightIcon }}" />
+                                    <Label text="{{ title }}" />
+                                </StackLayout>
+                            </ListView.itemTemplate>
+                        </ListView>
+                        <Button class="config" text="reset app" tap="{{ btnConfig }}" />
+                    </StackLayout>
+                </TabViewItem.view>
+            </TabViewItem>
+            
         </TabView.items>
     </TabView>
 </Page>

@@ -6,6 +6,7 @@ var fx_flashFX_1 = require("./fx-flashFX");
 var fx_fadeOutSlow_1 = require("./fx-fadeOutSlow");
 var fx_fadeInSlow_1 = require("./fx-fadeInSlow");
 var fx_flashFXMulti_1 = require("./fx-flashFXMulti");
+var mp3_horror_1 = require("./mp3-horror");
 var config_2 = require("../config");
 var imageModule = require("ui/image");
 var activityIndicatorModule = require("ui/activity-indicator");
@@ -103,6 +104,9 @@ var mainViewModel = (function (_super) {
                 fx_flashFXMulti_1.fxflashFXMulti({ "start": 42767, "amount": 2, "target": randfxflashFXMulti }, 50000);
                 fx_flashFXMulti_1.fxflashFXMulti({ "start": 43767, "amount": 2, "target": randfxflashFXMulti }, 50000);
                 fx_flashFXMulti_1.fxflashFXMulti({ "start": 44767, "amount": 2, "target": randfxflashFXMulti }, 50000);
+                //fxflashFXMulti    ({  "start" : 16000,    "amount": 2     }, 50000);
+                //fxfadeInOutLoop   ({  "start" : 5000,     "loop"  : 30,   "speed" : 2.5   }, 6000);
+                mp3_horror_1.mp3IntenseHorror();
             }
         }
     };
