@@ -26,8 +26,8 @@ var labelModule = require("ui/label");
 
 
 function runConfig(page) {
-    console.log(applicationSettings.getString("ipAddress"));
-    console.log(applicationSettings.getString("apiKey"));
+    //console.log(applicationSettings.getString("ipAddress"));
+    //console.log(applicationSettings.getString("apiKey"));
     
     if(applicationSettings.getString("apiKey") === undefined || applicationSettings.getString("apiKey") === "description"){
         
@@ -52,7 +52,7 @@ function runConfig(page) {
                         if(userResult.toString().indexOf("link button not pressed") > 0){
                             
                             page.css = 
-                                "Button { visibility: collapsed }" + 
+                                ".btn { visibility: collapsed }" + 
                                 ".spinner{ visibility: visible }" + 
                                 ".bridge { visibility: visible  }";
                             
@@ -170,6 +170,8 @@ var check = "";
 
 
 export function listRender(args) {
+    
+    console.log("listrender");
 
    // alert("test");
     page = args.object;
@@ -181,40 +183,53 @@ export function listRender(args) {
     var result;
     
         getHueBridgeInfo().then(function(_result){
-        // console.log("run bridge info");
+        console.log("run bridge info");
             result = _result;
+            global.lightsIdUsed = [];    
             
             
         if (firstLoad) { 
             lightsAmount = Object.keys(result.content.toJSON()["lights"]).length;
-            
+            console.log("1.memory: " + applicationSettings.getString("targetLights"));
             Object.keys(result.content.toJSON()["lights"]).map(function(k) {
                 lightsObjectAll.push({id: k, title: result.content.toJSON()["lights"][k]["name"], active: 0, lightIcon: ""});
                 
-                console.log("memoery: " + applicationSettings.getString("targetLights"));
+                console.log("2.memory: " + applicationSettings.getString("targetLights"));
                 var i = parseInt(k);
-                 if(applicationSettings.getString("targetLights") !== undefined || applicationSettings.getString("targetLights") !== "") {
-                    if(applicationSettings.getString("targetLights").indexOf(lightsObjectAll[i-1].id) > -1){
-                        lightsObjectAll[i-1].lightIcon = "~/images/check-icon.png"; 
-                        //lightsObjectAll[i-1].title = check + lightsObjectAll[i-1].title;
-                    }
-                    //console.log(global.lightsIdUsed.toString()); 
+                applicationSettings.setString("targetLights", ""); //set default
+                if(applicationSettings.getString("targetLights") !== undefined || applicationSettings.getString("targetLights") !== "") {
+                    //try{
+                        if(applicationSettings.getString("targetLights").indexOf(lightsObjectAll[i-1].id) > -1){
+                            lightsObjectAll[i-1].lightIcon = "~/images/check-icon.png"; 
+                            //lightsObjectAll[i-1].title = check + lightsObjectAll[i-1].title;
+                        }
+                    //}catch(err){
+                    //    console.log("err: " + err);
+                    //}
+                    //console.log(global.lightsIdUsed.toString());
                 }
             });
             
-            console.log("appdata" + applicationSettings.getString("targetLights")); 
-            
-            var _listView = view.getViewById(page, "listView");
-                _listView.refresh();
+            //console.log("appdata" + applicationSettings.getString("targetLights")); 
+            //console.log("lightsObjectAll: "); 
+            //console.log(lightsObjectAll);
             
             page.bindingContext = listView;
-
             listView.set("lights", lightsObjectAll);
+            
+            setInterval(() => { //todo fix this?
+                page.bindingContext = listView;
+                //listView.set("lights", lightsObjectAll);
+            }, 2500);
 
-            firstLoad = false; 
+            firstLoad = false;
         }
-        
-        global.lightsIdUsed = [];
+            //setInterval(() => { //todo fix this?
+            var _listView = view.getViewById(page, "listView");
+                _listView.refresh();
+                console.log("----");
+                console.log("refreshing listview");
+            //}, 5000);
 
         Object.keys(result.content.toJSON()["lights"]).map(function(k) {
             var i = parseInt(k);
@@ -229,10 +244,13 @@ export function listRender(args) {
                 global.lightsIdUsed.push(lightsObjectAll[i-1].id);
             }
             
-            console.log(global.lightsIdUsed.toString());
+            //console.log(global.lightsIdUsed.toString());
             
             applicationSettings.setString("targetLights", global.lightsIdUsed.toString()); //todo
         });
+            
+        console.log("title: ");
+        console.log(lightsObjectAll[1].title);
         
         if(applicationSettings.setString("bridgeState") === undefined){ //TODO remove this and always set at load
             applicationSettings.setString("bridgeState", result);

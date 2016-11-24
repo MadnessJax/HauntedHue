@@ -1,4 +1,4 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded">     
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" xmlns:Gif="nativescript-gif" loaded="pageLoaded">     
     <TabView tabsBackgroundColor="#151515" selectedColor="red">
         <TabView.items>            
             
@@ -10,25 +10,31 @@
                         <Label class="spinner" text="While Connecting To Hue Bridge" />
                         <Label class="bridge" text="Bridge Found! Please Hit The Button" />
                         <Label class="bridge" text="On Your Bridge To Allow Connetion." />
-                        <Button class="first" text="[ PlaceHolder ]" />
-                        <Button class="IntenseHorror" text="Intense Horror" tap="{{ btnIntenseHorror }}" />
-                        <Button class="third" text="[ PlaceHolder ]" /> 
+                        
+                        <Label text=" " />
+                        <Button class="btn first" text="[ PlaceHolder ]" />
+                        
+                        <Button class="btn IntenseHorror" text="Intense Horror" tap="{{ btnIntenseHorror }}" />
+                        <Gif:Gif src="~/images/button2.gif" class="btnGif " tap="{{ btnIntenseHorror }}" />
+                        
+                        <Button class="btn third" text="[ PlaceHolder ]" /> 
                     </StackLayout>
                 </TabViewItem.view>
             </TabViewItem>
             
             <TabViewItem title="SETTINGS">
                 <TabViewItem.view>
-                    <StackLayout>
-                        <Label class="lightsConfigTitle" text="Select which lights should be haunted:" />
+                    <StackLayout class="configPage">
+                        <Label class="lightsConfigTitle" text="Select Which Lights Should Be Haunted :" />
                         <ListView id="listView" items="{{ lights }}" itemTap="onTap">
                             <ListView.itemTemplate>
                                 <StackLayout orientation="horizontal" class="lightOption">
-                                    <Image src="{{ lightIcon }}" />
+                                    <Image class="lightIcon" src="{{ lightIcon }}" />
                                     <Label text="{{ title }}" />
                                 </StackLayout>
                             </ListView.itemTemplate>
                         </ListView>
+                        <Label class="scroll" text="&#xf0ab;SCROLL MENU &#xf0aa;" />
                         <Button class="config" text="reset app" tap="{{ btnConfig }}" />
                     </StackLayout>
                 </TabViewItem.view>

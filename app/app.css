@@ -1,21 +1,15 @@
 .font-awesome {
     font-family: "FontAwesome";
-    color: white;
 }
 
 Page {
-    /* background-image: ~/images/first-hue-app-setup.jpg; */
+    background-image: ~/images/first-hue-app-setup.jpg;
     background-color: black;
     background-size: 100% 100%;
 }
 
-StackLayout {
-    margin-top: 30px;
-        
-    opacity: 0.5
-}
-
 ActivityIndicator {
+    visibility: collapse;
     color: white;
     margin-top: 40%;
 }
@@ -33,8 +27,9 @@ Label {
     visibility: collapse;
 }
 
-StackLayout Button {
-    height: 100;
+StackLayout .btn,
+StackLayout .btnGif {
+    height: 115;
     
     margin-bottom: 5;
     
@@ -43,24 +38,43 @@ StackLayout Button {
     opacity: 1;
 }
 
+StackLayout .btnGif {
+    margin-top: -120;
+}
+
+.configPage {
+    top: 0;
+    background-color: black;
+}
+
 .first {
+    margin-top: 40;
     background-color: yellow;
+        opacity: 0.1;
 }
 
 .IntenseHorror {
     background-color: red; 
+        opacity: 0.1;
 }
 
 .third {
     background-color: green;
+        opacity: 0.1;
 }
 
 .config {
     
 }
 
+.scroll {
+    margin-top: 20;
+    color: white;
+    font-family: "FontAwesome";
+}
+
 ListView {
-    background-color: red;
+    height: 75%;
 }
 
 ListView Label {
@@ -78,6 +92,11 @@ ListView Label {
     margin: 0;
 }
 
+.lightIcon {
+    margin-left: 25;
+    margin-right: 10;
+}
+
 ListView Image {
     width: 20;
     height: 20;
@@ -87,5 +106,5 @@ ListView Image {
 .lightsConfigTitle {
     color: white;
     font-weight: bold;
-    padding: 0 10 30 10;
+    padding: 20 10 20 10;
 }

@@ -22,6 +22,9 @@ var applicationSettings = require("application-settings");
 var targetLights;
 
 
+import { listRender } from  "../config";
+
+
 import listViewModule = require("ui/list-view");
 
 
@@ -35,6 +38,8 @@ export class mainViewModel extends Observable {
         for(var a in args){
             console.log(a);
         }
+        
+        listRender(args);
     }
     
     constructor(_page) {
@@ -95,6 +100,9 @@ export class mainViewModel extends Observable {
 
     
     public btnIntenseHorror() {
+        
+        console.log("intense");
+        
         targetLights = global.lightsIdUsed;
         if(apiKey === undefined || apiKey === "description") {
             connect(this.page);
@@ -103,48 +111,50 @@ export class mainViewModel extends Observable {
             if (targetLights.length == 0) {
                 alert("no lights selected");
             } else {
-            
                 // console.log("targets: " + targetLights); //observable array
                 // base: randomiser: var rand = myArray[Math.floor(Math.random() * myArray.length)];
 
                 var randfxfadeInSlow = targetLights[Math.floor(Math.random() * targetLights.length)];
                 var randfxflashFXMulti = targetLights[Math.floor(Math.random() * targetLights.length)];
+                
+                //console.log("random selected lights:");
+                //console.log(targetLights[Math.floor(Math.random() * targetLights.length)]);
 
-                fxflashFX         ({  "start" : 2000}, 5000);  
-                fXfadeOutSlow     ({  "start" : 0,        "speed" : 50     }, 50000); //speed is 50 == 5 seconde
+                //fxflashFX         ({  "start" : 2000 },    5000);  
+                //fXfadeOutSlow     ({  "start" : 0,        "speed" : 50     }, 50000); //speed is 50 == 5 seconde
                 fxfadeInSlow      ({  "start" : 2800,     "interval" : 3150,    "speed" : 2,    "target": randfxfadeInSlow  }, 15000);
 
-                fxflashFXMulti    ({  "start" : 14767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 15767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 16767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
+                fxflashFXMulti    ({  "start" : 14767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 15767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 16767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
 
-                fxflashFXMulti    ({  "start" : 18767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 19767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 20767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
+                fxflashFXMulti    ({  "start" : 18767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 19767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 20767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
 
-                fxflashFXMulti    ({  "start" : 22767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 23767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 24767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
+                fxflashFXMulti    ({  "start" : 22767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 23767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 24767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
 
-                fxflashFXMulti    ({  "start" : 26767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 27767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 28767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
+                fxflashFXMulti    ({  "start" : 26767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 27767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 28767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
 
-                fxflashFXMulti    ({  "start" : 30767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 31767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 32767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
+                fxflashFXMulti    ({  "start" : 30767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 31767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 32767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
 
-                fxflashFXMulti    ({  "start" : 34767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 35767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 36767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
+                fxflashFXMulti    ({  "start" : 34767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 35767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 36767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
 
-                fxflashFXMulti    ({  "start" : 38767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 39767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 40767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
+                fxflashFXMulti    ({  "start" : 38767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 39767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 40767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
 
-                fxflashFXMulti    ({  "start" : 42767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 43767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
-                fxflashFXMulti    ({  "start" : 44767,    "amount": 2,     "target": randfxflashFXMulti }, 50000);
+                fxflashFXMulti    ({  "start" : 42767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 43767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
+                fxflashFXMulti    ({  "start" : 44767,    "amount": 2,     "target": targetLights[targetLights[Math.floor(Math.random() * targetLights.length)]] }, 50000);
 
                 //fxflashFXMulti    ({  "start" : 16000,    "amount": 2     }, 50000);
                 //fxfadeInOutLoop   ({  "start" : 5000,     "loop"  : 30,   "speed" : 2.5   }, 6000);
@@ -158,7 +168,7 @@ export class mainViewModel extends Observable {
 
     
     public keyCheck(_page) {
-        console.log("apiKey: " + apiKey);
+        // console.log("apiKey: " + apiKey);
         if(apiKey === undefined || apiKey === "description") {
             connect(_page);
         }
