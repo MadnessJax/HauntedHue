@@ -196,7 +196,12 @@ export function listRender(args) {
                 
                 console.log("2.memory: " + applicationSettings.getString("targetLights"));
                 var i = parseInt(k);
-                applicationSettings.setString("targetLights", ""); //set default
+                
+                
+                if(applicationSettings.getString("targetLights") == undefined){
+                    applicationSettings.setString("targetLights", ""); //if bugged then fix this if
+                }
+                
                 if(applicationSettings.getString("targetLights") !== undefined || applicationSettings.getString("targetLights") !== "") {
                     //try{
                         if(applicationSettings.getString("targetLights").indexOf(lightsObjectAll[i-1].id) > -1){
